@@ -27,8 +27,8 @@ const get_product = async (req,res)=>{
     try {
        const data =  await Product.find()
         for(let i=0;i<data.length;i++){
-            customer = await Customer.findOne({_id:data[i].customerId})
-             data[i].customerDetail = await customer
+            let customer = await Customer.findOne({_id:data[i].customerId})
+             data[i].customerDetail = await customer.firstName+' '+customer.lastName
         }
         if(data){
             res.status(200).json(data)
