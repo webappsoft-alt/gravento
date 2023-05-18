@@ -5,15 +5,15 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
-const dotenv = require('dotenv');
-dotenv.config({ path: './config.env' });
+// const dotenv = require('dotenv');
+// dotenv.config({ path: './config.env' });
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-const DB = 'mongodb+srv://danishgoheer17:danishgoheer@cluster0.f0pk1iv.mongodb.net/gravacentrot';
+const DB = 'mongodb+srv://danishgoheer17:danishgoheer@cluster0.f0pk1iv.mongodb.net/gravacentro';
 mongoose.connect(DB,{
     useNewURlParser: true,
     useUnifiedTopology: true,

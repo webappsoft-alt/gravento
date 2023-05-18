@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const bodyPraser = require("body-parser")
 customer_route.use(cors());
 customer_route.use(cookieParser());
+
 customer_route.use(bodyPraser.json())
 customer_route.use(bodyPraser.urlencoded({extended:true}))
 
