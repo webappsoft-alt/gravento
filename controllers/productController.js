@@ -25,7 +25,7 @@ const create_product = async(req,res)=>{
 
 const get_product = async (req,res)=>{
     try {
-       const data =  await Product.find()
+       const data =  await Product.find({ }).sort( { _id : -1 } )
         for(let i=0;i<data.length;i++){
             let customer = await Customer.findOne({_id:data[i].customerId})
              data[i].customerDetail = await customer.firstName+' '+customer.lastName

@@ -27,12 +27,12 @@ const create_price = async(req,res)=>{
 
 const get_price = async (req,res)=>{
     try {
-       const data =  await PriceManagement.find()
+       const data =  await PriceManagement.find({ }).sort( { _id : -1 } )
         for(let i=0;i<data.length;i++){
             let customer = await Customer.findOne({_id:data[i].customerId})
             let productt = await Product.findOne({_id:data[i].productId})
-             data[i].customerDetail = await customer.firstName+' '+customer.lastName
-             data[i].productDetail = await productt.productName
+             data[i].customerDetail = await customer?.firstName+' '+customer?.lastName
+             data[i].productDetail = await productt?.productName
         }
         if(data){
             res.status(200).json(data)

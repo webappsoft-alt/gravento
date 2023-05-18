@@ -44,7 +44,7 @@ const create_customer = async(req,res)=>{
 
 const get_customer = async (req,res)=>{
     try {
-       const data =  await Customer.find()
+       const data =  await Customer.find({ }).sort( { _id : -1 } )
         if(data){
             res.status(200).json(data)
         }
