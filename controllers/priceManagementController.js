@@ -32,7 +32,7 @@ const get_price = async (req,res)=>{
             let customer = await Customer.findOne({_id:data[i].customerId})
             let productt = await Product.findOne({_id:data[i].productId})
              data[i].customerDetail = await customer.firstName+' '+customer.lastName
-             data[i].productData = await productt.productName
+             data[i].productDetail = await productt.productName
         }
         if(data){
             res.status(200).json(data)
