@@ -1,18 +1,19 @@
 const Product = require("../models/productModel");
 const Customer = require("../models/customerModel");
+const PriceManagement = require("../models/priceManagementModel");
 
-const create_product = async(req,res)=>{
+const create_price = async(req,res)=>{
     try {
-       const product =  new Product({
+       const price =  new PriceManagement({
             customerId:req.body.customerId,
-            productName:req.body.productName,  
+            productId:req.body.productId,  
             price:req.body.price,  
-            costData:req.body.costData,  
-            customerDetail:''  
+            customerDetail:'',  
+            productDetail:''  
         })
-            const product_data = product.save()
+            const price_data = price.save()
             try {
-                if(product_data){
+                if(price_data){
                   res.status(200).send({result:true,message:'Added Successfully'})
                 }   
             } catch (error) {
@@ -23,12 +24,14 @@ const create_product = async(req,res)=>{
     }
 }
 
-const get_product = async (req,res)=>{
+const get_price = async (req,res)=>{
     try {
-       const data =  await Product.find()
+       const data =  await PriceManagement.find()
         for(let i=0;i<data.length;i++){
-            customer = await Customer.findOne({_id:data[i].customerId})
+            let customer = await Customer.findOne({_id:data[i].customerId})
+            let product = await Product.findOne({_id:data[i].productId})
              data[i].customerDetail = await customer
+             data[i].productData = await product
         }
         if(data){
             res.status(200).json(data)
@@ -38,15 +41,14 @@ const get_product = async (req,res)=>{
     }
 }
 
-const update_product = async (req,res) => {
+const update_price = async (req,res) => {
     try {
-        const productData = await Product.findOneAndUpdate({
-            _id:req.body.productId
+        const productData = await PriceManagement.findOneAndUpdate({
+            _id:req.body.priceManagementId
         },{
             customerId:req.body.customerId,
-            productName:req.body.productName,  
+            productId:req.body.productId,  
             price:req.body.price,  
-            costData:req.body.costData, 
         })
         if (productData) {
             res.status(200).send({result:true,message:'Update Successfully'})
@@ -56,8 +58,8 @@ const update_product = async (req,res) => {
     }
 }
 
-const delete_product = async(req,res) => {
-    const deleteData = await Product.findByIdAndDelete({ _id: req.body.productId });
+const delete_price = async(req,res) => {
+    const deleteData = await PriceManagement.findByIdAndDelete({ _id: req.body.priceManagementId });
     try {
       if(deleteData){
         res.status(200).send({result:true,message:'Deleted Successfully'})
@@ -68,8 +70,8 @@ const delete_product = async(req,res) => {
 }
 
 module.exports = {
-    create_product,
-    get_product,
-    update_product,
-    delete_product
+    create_price,
+    get_price,
+    update_price,
+    delete_price
 }

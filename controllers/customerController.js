@@ -19,7 +19,8 @@ const create_customer = async(req,res)=>{
             email:req.body.email,  
             phone:req.body.phone,  
             address:req.body.address,  
-            billingData:req.body.billingData,  
+            billingData:req.body.billingData,
+            tin:req.body.tin
         })
 
         const customerData = await Customer.findOne({email:req.body.email})
@@ -62,7 +63,8 @@ const update_customer = async (req,res) => {
             email:req.body.email,  
             phone:req.body.phone,  
             address:req.body.address,  
-            billingData:req.body.billingData, 
+            billingData:req.body.billingData,
+            tin:req.body.tin
         })
         if (customerData) {
             res.status(200).send({result:true,message:'Update Successfully'})

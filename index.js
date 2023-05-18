@@ -11,6 +11,10 @@ app.use('/api',customerRoute)
 const productRoute = require("./routes/productRoute")
 app.use('/api',productRoute)
 
+//Price Management route
+const priceManagementRoute = require("./routes/priceManagementRoute")
+app.use('/api',priceManagementRoute)
+
 app.listen(3000,function(){
     console.log("Server is ready")
 })

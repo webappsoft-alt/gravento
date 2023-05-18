@@ -18,6 +18,9 @@ const customerSchema = mongoose.Schema({
     address:{
         type:String,
     },
+    tin:{
+        type:String,
+    },
     billingData:{
         type:String,
     }
