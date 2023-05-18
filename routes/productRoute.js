@@ -6,7 +6,8 @@ const cookieParser = require('cookie-parser');
 const bodyPraser = require("body-parser")
 customer_route.use(cors());
 customer_route.use(cookieParser());
-
+customer_route.use(cors({origin:'https://stupendous-mochi-9cb249.netlify.app'}));
+customer_route.options('*', cors())
 customer_route.use(bodyPraser.json())
 customer_route.use(bodyPraser.urlencoded({extended:true}))
 
