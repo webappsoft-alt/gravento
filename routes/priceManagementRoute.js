@@ -5,8 +5,6 @@ const cookieParser = require('cookie-parser');
 
 const bodyPraser = require("body-parser")
 app.use(cors());
-app.use(cors({origin:'https://stupendous-mochi-9cb249.netlify.app'}));
-app.options('*', cors())
 app.use(cookieParser());
 
 app.use(bodyPraser.json())
