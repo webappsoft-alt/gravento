@@ -1,7 +1,11 @@
 const express = require("express");
 const app = express()
 const mongoose = require("mongoose");
-mongoose.connect("mongodb+srv://danishgoheer17:danishgoheer@cluster0.f0pk1iv.mongodb.net/gravacentro")
+const DB = 'mongodb+srv://danishgoheer17:danishgoheer@cluster0.f0pk1iv.mongodb.net/gravacentrot';
+mongoose.connect(DB,{
+    useNewURlParser: true,
+    useUnifiedTopology: true,
+  })
 
 //customer route
 const customerRoute = require("./routes/customerRoute")
