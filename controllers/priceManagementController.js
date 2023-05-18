@@ -8,6 +8,7 @@ const create_price = async(req,res)=>{
             customerId:req.body.customerId,
             productId:req.body.productId,  
             price:req.body.price,  
+            reason:req.body.reason,
             customerDetail:'',  
             productDetail:''  
         })
@@ -49,6 +50,7 @@ const update_price = async (req,res) => {
             customerId:req.body.customerId,
             productId:req.body.productId,  
             price:req.body.price,  
+            reason:req.body.reason,
         })
         if (productData) {
             res.status(200).send({result:true,message:'Update Successfully'})

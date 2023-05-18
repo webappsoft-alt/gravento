@@ -18,5 +18,8 @@ const priceManagementSchema = mongoose.Schema({
         type:String,
         required:true
     },
+    reason:{
+        type:String,
+    },
 })
 module.exports = mongoose.model("PriceManagement",priceManagementSchema)
