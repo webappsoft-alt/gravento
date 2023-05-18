@@ -29,9 +29,9 @@ const get_price = async (req,res)=>{
        const data =  await PriceManagement.find()
         for(let i=0;i<data.length;i++){
             let customer = await Customer.findOne({_id:data[i].customerId})
-            let product = await Product.findOne({_id:data[i].productId})
+            let productt = await Product.findOne({_id:data[i].productId})
              data[i].customerDetail = await customer
-             data[i].productData = await product
+             data[i].productData = await productt
         }
         if(data){
             res.status(200).json(data)

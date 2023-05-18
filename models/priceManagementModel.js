@@ -19,4 +19,4 @@ const priceManagementSchema = mongoose.Schema({
         required:true
     },
 })
-module.exports = mongoose.model("Product",priceManagementSchema)
+module.exports = mongoose.model("PriceManagement",priceManagementSchema)
