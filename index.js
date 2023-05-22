@@ -31,6 +31,26 @@ app.use('/',productRoute)
 const priceManagementRoute = require("./routes/priceManagementRoute")
 app.use('/',priceManagementRoute)
 
+//Remittence Voucher route
+const remittanceVoucher = require("./routes/remittanceVoucherRoute")
+app.use('/',remittanceVoucher)
+
+//Remittence Table route
+const remittanceTable = require("./routes/remittanceTableRoute")
+app.use('/',remittanceTable)
+
+//Expense Category route
+const expenseCategory = require("./routes/expenseCatRoute")
+app.use('/',expenseCategory)
+
+//Expense Sub Category route
+const expenseSubCategory = require("./routes/expenseSubCatRoute")
+app.use('/',expenseSubCategory)
+
+//Expense expenses
+const expenseRoute = require("./routes/expenseRoute")
+app.use('/',expenseRoute)
+
 app.listen(3000,function(){
     console.log("Server is ready, running on 3000 port")
 })
