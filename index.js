@@ -47,9 +47,33 @@ app.use('/',expenseCategory)
 const expenseSubCategory = require("./routes/expenseSubCatRoute")
 app.use('/',expenseSubCategory)
 
-//Expense expenses
+//Expense 
 const expenseRoute = require("./routes/expenseRoute")
 app.use('/',expenseRoute)
+
+//Production 
+const productionRoute = require("./routes/productionRoute")
+app.use('/',productionRoute)
+
+//Inventory expenses
+const inventoryRoute = require("./routes/inventoryRoute")
+app.use('/',inventoryRoute)
+
+//Vehicle 
+const vehicleRoute = require("./routes/vehicleRoute")
+app.use('/',vehicleRoute)
+
+//Machinary 
+const machinaryRoute = require("./routes/machinaryRoute")
+app.use('/',machinaryRoute)
+
+//Fuel Utilization 
+const fuelUtilizationRoute = require("./routes/fuelUtilizationRoute")
+app.use('/',fuelUtilizationRoute)
+
+//Service 
+const serviceRoute = require("./routes/serviceRoute")
+app.use('/',serviceRoute)
 
 app.listen(3000,function(){
     console.log("Server is ready, running on 3000 port")
