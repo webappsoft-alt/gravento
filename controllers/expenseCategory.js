@@ -18,11 +18,32 @@ const create_expense_cat = async(req,res)=>{
     }
 }
 
+const search_expense_cat = async (req,res)=>{
+    try {
+       const data =  await ExpenseCategory.find({catName: {$regex : new RegExp(req?.body?.search)}}).lean()
+        if(data){
+            if(req?.body?.last_id == 0){
+                const data1 = data.length
+                res.status(200).json({data:data,count:data1})
+            }else{
+                res.status(200).json({data:data,count:''})
+            }
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
 const get_expense_cat = async (req,res)=>{
     try {
-       const data =  await ExpenseCategory.find({ }).sort( { _id : -1 } )
+       const data =  await ExpenseCategory.find({ }).sort( { _id : -1 }).limit(10).lean()
         if(data){
-            res.status(200).json(data)
+            if(req?.body?.last_id == 0){
+                const data1 = await ExpenseCategory.find({}).count()
+                res.status(200).json({data:data,count:data1})
+            }else{
+                res.status(200).json({data:data,count:''})
+            }
         }
     } catch (error) {
         res.status(400).send(error.message);
@@ -59,5 +80,6 @@ module.exports = {
     create_expense_cat,
     get_expense_cat,
     update_expense_cat,
-    delete_expense_cat
+    delete_expense_cat,
+    search_expense_cat
 }

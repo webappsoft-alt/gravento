@@ -15,5 +15,6 @@ app.post("/createProduction",production.create_prod_table)
 app.get("/getProduction",production.get_prod_table)
 app.post("/updateProduction",production.update_prod_Table)
 app.post("/deleteProduction",production.delete_prod_table)
+app.get("/searchProduction",production.search_prod_table)
 
 module.exports  = app;

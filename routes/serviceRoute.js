@@ -15,5 +15,6 @@ app.post("/createService",service.create_service)
 app.get("/getService",service.get_service)
 app.post("/updateService",service.update_service)
 app.post("/deleteService",service.delete_service)
+app.get("/searchService",service.search_service)
 
 module.exports  = app;

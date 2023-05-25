@@ -1,18 +1,18 @@
 const express = require("express");
-const customer_route = express()
+const app = express()
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
 const bodyPraser = require("body-parser")
-customer_route.use(cookieParser());
+app.use(cookieParser());
 
-customer_route.use(bodyPraser.json())
-customer_route.use(bodyPraser.urlencoded({extended:true}))
+app.use(bodyPraser.json())
+app.use(bodyPraser.urlencoded({extended:true}))
 
 // const multer = require('multer');
 // const path = require('path')
 
-// customer_route.use(express.static('public'))
+// app.use(express.static('public'))
 
 // const storage = multer.diskStorage({
 //     destination:function(req,file,cb){
@@ -32,9 +32,10 @@ customer_route.use(bodyPraser.urlencoded({extended:true}))
 // const upload = multer({storage:storage})
 
 const customerController =  require("../controllers/customerController")
-customer_route.post("/createCustomer",customerController.create_customer)
-customer_route.get("/getCustomer",customerController.get_customer)
-customer_route.post("/updateCustomer",customerController.update_customer)
-customer_route.post("/deleteCustomer",customerController.delete_customer)
+app.post("/createCustomer",customerController.create_customer)
+app.get("/getCustomer",customerController.get_customer)
+app.post("/updateCustomer",customerController.update_customer)
+app.post("/deleteCustomer",customerController.delete_customer)
+app.get("/searchCustomer",customerController.search_customer)
 
-module.exports  = customer_route;
+module.exports  = app;

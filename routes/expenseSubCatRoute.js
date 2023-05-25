@@ -15,5 +15,6 @@ app.post("/createExpenseSubCat",expenseSubCategory.create_expense_subcat)
 app.get("/getExpenseSubCat",expenseSubCategory.get_expense_subcat)
 app.post("/updateExpenseSubCat",expenseSubCategory.update_expense_subcat)
 app.post("/deleteExpenseSubCat",expenseSubCategory.delete_expense_subcat)
+app.get("/searchExpenseSubCat",expenseSubCategory.search_expense_subcat)
 
 module.exports  = app;

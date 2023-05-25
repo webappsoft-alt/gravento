@@ -7,6 +7,9 @@ const expenseSubCategory = mongoose.Schema({
     catId:{
         type:String,
         required:true
+    },
+    catName:{
+        type:String
     }
 })
 module.exports = mongoose.model("expenseSubCategory",expenseSubCategory)

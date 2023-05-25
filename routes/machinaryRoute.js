@@ -15,5 +15,6 @@ app.post("/createMachinary",machinary.create_machinary)
 app.get("/getMachinary",machinary.get_machinary)
 app.post("/updateMachinary",machinary.update_machinary)
 app.post("/deleteMachinary",machinary.delete_machinary)
+app.get("/searchMachinary",machinary.search_machinary)
 
 module.exports  = app;

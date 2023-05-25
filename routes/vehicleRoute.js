@@ -15,5 +15,6 @@ app.post("/createVehicle",vehicle.create_vehicle)
 app.get("/getVehicle",vehicle.get_vehicle)
 app.post("/updateVehicle",vehicle.update_vehicle)
 app.post("/deleteVehicle",vehicle.delete_vehicle)
+app.get("/searchVehicle",vehicle.search_vehicle)
 
 module.exports  = app;

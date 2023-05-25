@@ -3,6 +3,8 @@ const ExpenseCategory = require("../models/expenseCategory");
 const ExpenseSubCategory = require("../models/expenseSubCategory");
 const create_expenses = async(req,res)=>{
     try {
+        const catValue = await ExpenseCategory.findOne({_id:req?.body?.catId})
+        const subCatValue = await ExpenseSubCategory.findOne({_id:req?.body?.subCatId})
        const expense =  new Expense({
         catId:req.body.catId,
         subCatId:req.body.subCatId,
@@ -10,8 +12,8 @@ const create_expenses = async(req,res)=>{
         invoice:req.body.invoice,  
         reason:req.body.reason,  
         total:req.body.total,
-        cat_name:'',
-        subCatName:''
+        cat_name:catValue.catName,
+        subCatName:subCatValue.subCatName
         })
             const data = expense.save()
             try {
@@ -28,16 +30,14 @@ const create_expenses = async(req,res)=>{
 
 const get_expenses = async (req,res)=>{
     try {
-       const data =  await Expense.find({ }).sort( { _id : -1 } )
-       for(let i=0;i<data.length;i++){
-        let cat = await ExpenseCategory.findOne({_id:data[i].catId})
-         data[i].cat_name = await cat?.catName
-         let subcat = await ExpenseSubCategory.findOne({_id:data[i].subCatId})
-         data[i].subCatName = await subcat?.subCatName
-
-    }
+       const data =  await Expense.find({ }).sort( { _id : -1 } ).limit(10).lean()
         if(data){
-            res.status(200).json(data)
+            if(req?.body?.last_id == 0){
+                const data1 = await Expense.find({}).count()
+                res.status(200).json({data:data,count:data1})
+            }else{
+                res.status(200).json({data:data,count:''})
+            }
     
         }
     } catch (error) {
@@ -45,7 +45,26 @@ const get_expenses = async (req,res)=>{
     }
 }
 
+const search_expense = async (req,res)=>{
+    try {
+       const data =  await Expense.find({$or:[{expensesDate: {$regex : new RegExp(req?.body?.search)}},{invoice: {$regex : new RegExp(req?.body?.search)}},{reason: {$regex : new RegExp(req?.body?.search)}},
+        {total: {$regex : new RegExp(req?.body?.search)}},{cat_name: {$regex : new RegExp(req?.body?.search)}},{subCatName: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+        if(data){
+            if(req?.body?.last_id == 0){
+                const data1 = await Expense.find({}).count()
+                res.status(200).json({data:data,count:data1})
+            }else{
+                res.status(200).json({data:data,count:''})
+            }
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
 const update_expenses = async (req,res) => {
+    const catValue = await ExpenseCategory.findOne({_id:req?.body?.catId})
+    const subCatValue = await ExpenseSubCategory.findOne({_id:req?.body?.subCatId})
     try {
         const data = await Expense.findOneAndUpdate({
             _id:req.body.expenseId
@@ -56,6 +75,8 @@ const update_expenses = async (req,res) => {
             total:req.body.total,
             catId:req.body.catId,
             subCatId:req.body.subCatId,
+            cat_name:catValue.catName,
+            subCatName:subCatValue.subCatName
         })
         if (data) {
             res.status(200).send({result:true,message:'Update Successfully'})
@@ -80,5 +101,6 @@ module.exports = {
     create_expenses,
     get_expenses,
     update_expenses,
-    delete_expenses
+    delete_expenses,
+    search_expense
 }

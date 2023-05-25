@@ -15,5 +15,6 @@ app.post("/createInventory",inventory.create_inventory)
 app.get("/getInventory",inventory.get_inventory)
 app.post("/updateInventory",inventory.update_inventory)
 app.post("/deleteInventory",inventory.delete_inventory)
+app.get("/searchInventory",inventory.search_inventory)
 
 module.exports  = app;

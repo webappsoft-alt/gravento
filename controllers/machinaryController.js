@@ -22,9 +22,31 @@ const create_machinary = async(req,res)=>{
 
 const get_machinary = async (req,res)=>{
     try {
-       const data =  await Machinary.find({ }).sort( { _id : -1 } )
+       const data =  await Machinary.find({ }).sort( { _id : -1 } ).limit(10).lean()
         if(data){
-            res.status(200).json(data)
+            if(req?.body?.last_id == 0){
+                const data1 = await Machinary.find({}).count()
+                res.status(200).json({data:data,count:data1})
+            }else{
+                res.status(200).json({data:data,count:''})
+            }
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+const search_machinary = async (req,res)=>{
+    try {
+       const data =  await Machinary.find({$or:[{machineNumber: {$regex : new RegExp(req?.body?.search)}},{machineType: {$regex : new RegExp(req?.body?.search)}}
+        ,{technicalData: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+        if(data){
+            if(req?.body?.last_id == 0){
+                const data1 = data.length
+                res.status(200).json({data:data,count:data1})
+            }else{
+                res.status(200).json({data:data,count:''})
+            }
         }
     } catch (error) {
         res.status(400).send(error.message);
@@ -63,5 +85,6 @@ module.exports = {
     create_machinary,
     get_machinary,
     update_machinary,
-    delete_machinary
+    delete_machinary,
+    search_machinary
 }

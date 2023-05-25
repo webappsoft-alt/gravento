@@ -3,12 +3,13 @@ const Customer = require("../models/customerModel");
 
 const create_product = async(req,res)=>{
     try {
+        const customerValue = await Customer.findOne({_id:req?.body?.customerId})
        const product =  new Product({
             customerId:req.body.customerId,
             productName:req.body.productName,  
             price:req.body.price,  
             costData:req.body.costData,  
-            customerDetail:''  
+            customerDetail:customerValue?.firstName+' '+customerValue?.lastName
         })
             const product_data = product.save()
             try {
@@ -25,13 +26,31 @@ const create_product = async(req,res)=>{
 
 const get_product = async (req,res)=>{
     try {
-       const data =  await Product.find({ }).sort( { _id : -1 } )
-        for(let i=0;i<data.length;i++){
-            let customer = await Customer.findOne({_id:data[i].customerId})
-             data[i].customerDetail = await customer.firstName+' '+customer.lastName
-        }
+       const data =  await Product.find({ }).sort({ _id : -1 }).limit(10)
         if(data){
-            res.status(200).json(data)
+            if(req?.body?.last_id == 0){
+                const data1 = await Product.find({}).count()
+                res.status(200).json({data:data,count:data1})
+            }else{
+                res.status(200).json({data:data,count:''})
+            }
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+const search_product = async (req,res)=>{
+    try {
+       const data =  await Product.find({$or:[{productName: {$regex : new RegExp(req?.body?.search)}},{price: {$regex : new RegExp(req?.body?.search)}}
+        ,{costData: {$regex : new RegExp(req?.body?.search)}},{customerDetail: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+        if(data){
+            if(req?.body?.last_id == 0){
+                const data1 = data.length
+                res.status(200).json({data:data,count:data1})
+            }else{
+                res.status(200).json({data:data,count:''})
+            }
         }
     } catch (error) {
         res.status(400).send(error.message);
@@ -40,6 +59,7 @@ const get_product = async (req,res)=>{
 
 const update_product = async (req,res) => {
     try {
+        const customerValue = await Customer.findOne({_id:req?.body?.customerId})
         const productData = await Product.findOneAndUpdate({
             _id:req.body.productId
         },{
@@ -47,6 +67,7 @@ const update_product = async (req,res) => {
             productName:req.body.productName,  
             price:req.body.price,  
             costData:req.body.costData, 
+            customerDetail:customerValue?.firstName+' '+customerValue?.lastName
         })
         if (productData) {
             res.status(200).send({result:true,message:'Update Successfully'})
@@ -71,5 +92,6 @@ module.exports = {
     create_product,
     get_product,
     update_product,
-    delete_product
+    delete_product,
+    search_product
 }

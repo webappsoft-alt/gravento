@@ -24,9 +24,30 @@ const create_rem_table = async(req,res)=>{
 
 const get_rem_table = async (req,res)=>{
     try {
-       const data =  await RemittanceTable.find({ }).sort( { _id : -1 } )
+       const data =  await RemittanceTable.find({ }).sort( { _id : -1 } ).limit(10).lean()
         if(data){
-            res.status(200).json(data)
+            if(req?.body?.last_id == 0){
+                const data1 = await RemittanceTable.find({}).count()
+                res.status(200).json({data:data,count:data1})
+            }else{
+                res.status(200).json({data:data,count:''})
+            }
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+const search_rem_Table = async (req,res)=>{
+    try {
+       const data =  await RemittanceTable.find({$or:[{remittanceType: {$regex : new RegExp(req?.body?.search)}},{amount: {$regex : new RegExp(req?.body?.search)}}
+        ,{remittanceTabledate: {$regex : new RegExp(req?.body?.search)}},{voucherNumber: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+        if(data){
+            if(req?.body?.last_id == 0){
+                const data1 = data.length
+                res.status(200).json({data:data,count:data1})
+            }else{
+                res.status(200).json({data:data,count:''})
+            }
         }
     } catch (error) {
         res.status(400).send(error.message);
@@ -66,5 +87,6 @@ module.exports = {
     create_rem_table,
     get_rem_table,
     update_rem_Table,
-    delete_rem_table
+    delete_rem_table,
+    search_rem_Table
 }

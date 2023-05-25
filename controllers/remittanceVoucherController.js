@@ -9,7 +9,6 @@ const create_rem_voucher = async(req,res)=>{
            remittanceDate:req.body.remittanceDate,  
            quantity:req.body.quantity,  
            recipient:req.body.recipient,
-           recipientDetail:'',
            voucherNumber:Math.floor(100000 + Math.random() * 900000)
         })
             const data = remittanceVoucher.save()
@@ -27,13 +26,31 @@ const create_rem_voucher = async(req,res)=>{
 
 const get_rem_voucher = async (req,res)=>{
     try {
-       const data =  await RemittanceVoucher.find({ }).sort( { _id : -1 } )
-        for(let i=0;i<data.length;i++){
-            let customer = await Customer.findOne({_id:data[i].customerId})
-             data[i].customerDetail = await customer?.firstName+' '+customer?.lastName
-        }
+       const data =  await RemittanceVoucher.find({ }).sort( { _id : -1 } ).limit(10).lean()
         if(data){
-            res.status(200).json(data)
+            if(req?.body?.last_id == 0){
+                const data1 = await RemittanceVoucher.find({}).count()
+                res.status(200).json({data:data,count:data1})
+            }else{
+                res.status(200).json({data:data,count:''})
+            }
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+const search_rem_voucher = async (req,res)=>{
+    try {
+       const data =  await RemittanceVoucher.find({$or:[{remittanceCreater: {$regex : new RegExp(req?.body?.search)}},{status: {$regex : new RegExp(req?.body?.search)}}
+        ,{remittanceDate: {$regex : new RegExp(req?.body?.search)}},{quantity: {$regex : new RegExp(req?.body?.search)}},{recipient: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+        if(data){
+            if(req?.body?.last_id == 0){
+                const data1 = data.length
+                res.status(200).json({data:data,count:data1})
+            }else{
+                res.status(200).json({data:data,count:''})
+            }
         }
     } catch (error) {
         res.status(400).send(error.message);
@@ -74,5 +91,6 @@ module.exports = {
     create_rem_voucher,
     get_rem_voucher,
     update_rem_voucher,
-    delete_rem_voucher
+    delete_rem_voucher,
+    search_rem_voucher
 }

@@ -44,9 +44,30 @@ const create_customer = async(req,res)=>{
 
 const get_customer = async (req,res)=>{
     try {
-       const data =  await Customer.find({ }).sort( { _id : -1 } )
+       const data =  await Customer.find({}).sort({ _id : -1 }).limit(10).lean()
         if(data){
-            res.status(200).json(data)
+            if(req?.body?.last_id == 0){
+                const data1 = await Customer.find({}).count()
+                res.status(200).json({data:data,count:data1})
+            }else{
+                res.status(200).json({data:data,count:''})
+            }
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+const search_customer = async (req,res)=>{
+    try {
+       const data =  await Customer.find({$or:[{firstName: {$regex : new RegExp(req?.body?.search)}},{lastName: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+        if(data){
+            if(req?.body?.last_id == 0){
+                const data1 = data.length
+                res.status(200).json({data:data,count:data1})
+            }else{
+                res.status(200).json({data:data,count:''})
+            }
         }
     } catch (error) {
         res.status(400).send(error.message);
@@ -88,5 +109,6 @@ module.exports = {
     create_customer,
     get_customer,
     update_customer,
-    delete_customer
+    delete_customer,
+    search_customer
 }

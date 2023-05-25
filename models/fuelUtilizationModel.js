@@ -23,6 +23,12 @@ const fuelUtilization = mongoose.Schema({
     milleage:{
         type:String,
         required:true
+    },
+    expense:{
+        type:String,
+    },
+    vehicle:{
+        type:String,
     }
 })
 module.exports = mongoose.model("fuelUtilization",fuelUtilization)

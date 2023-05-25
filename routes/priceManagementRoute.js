@@ -15,5 +15,6 @@ app.post("/createPrice",priceController.create_price)
 app.get("/getPrice",priceController.get_price)
 app.post("/updatePrice",priceController.update_price)
 app.post("/deletePrice",priceController.delete_price)
+app.get("/searchPrice",priceController.search_price)
 
 module.exports  = app;

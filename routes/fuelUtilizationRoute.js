@@ -15,5 +15,6 @@ app.post("/createFuel",fuelUtilization.create_fuel)
 app.get("/getFuel",fuelUtilization.get_fuel)
 app.post("/updateFuel",fuelUtilization.update_fuel)
 app.post("/deleteFuel",fuelUtilization.delete_fuel)
+app.get("/searchFuel",fuelUtilization.search_fuel)
 
 module.exports  = app;

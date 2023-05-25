@@ -5,13 +5,15 @@ const Expense = require("../models/expensesModel");
 
 const create_inventory = async(req,res)=>{
     try {
+        const productValue = await Product.findOne({_id:req?.body?.productId})
+        const expenseValue = await Expense.findOne({_id:req?.body?.expenseId})
        const inventory =  new Inventory({
         productId:req.body.productId,
         expenseId:req.body.expenseId,  
         quantity:req.body.quantity,  
         value:req.body.value,  
-        productDetail:"",
-        expenseDetail:""
+        productDetail:productValue?.productName,
+        expenseDetail:expenseValue?.invoice
         })
             const data = inventory.save()
             try {
@@ -28,16 +30,14 @@ const create_inventory = async(req,res)=>{
 
 const get_inventory = async (req,res)=>{
     try {
-       const data =  await Inventory.find({ }).sort( { _id : -1 } )
-       for(let i=0;i < data.length; i++){
-           let productt =  await Product.findOne({_id:data[i].productId})
-           data[i].productDetail = productt?.productName
-
-           let expense =  await Expense.findOne({_id:data[i].expenseId})
-           data[i].expenseDetail = expense?.invoice
-       }
+       const data =  await Inventory.find({ }).sort( { _id : -1 } ).limit(10).lean()
         if(data){
-            res.status(200).json(data)
+            if(req?.body?.last_id == 0){
+                const data1 = await Inventory.find({}).count()
+                res.status(200).json({data:data,count:data1})
+            }else{
+                res.status(200).json({data:data,count:''})
+            }
         }
     } catch (error) {
         res.status(400).send(error.message);
@@ -46,6 +46,8 @@ const get_inventory = async (req,res)=>{
 
 const update_inventory = async (req,res) => {
     try {
+        const productValue = await Product.findOne({_id:req?.body?.productId})
+        const expenseValue = await Expense.findOne({_id:req?.body?.expenseId})
         const data = await Inventory.findOneAndUpdate({
             _id:req.body.inventoryId
         },{
@@ -53,6 +55,8 @@ const update_inventory = async (req,res) => {
             expenseId:req.body.expenseId,  
             quantity:req.body.quantity,  
             value:req.body.value, 
+            productDetail:productValue?.productName,
+            expenseDetail:expenseValue?.invoice
         })
         if (data) {
             res.status(200).send({result:true,message:'Update Successfully'})
@@ -61,7 +65,22 @@ const update_inventory = async (req,res) => {
         res.status(400).send(error.message)
     }
 }
-
+const search_inventory = async (req,res)=>{
+    try {
+       const data =  await Inventory.find({$or:[{quantity: {$regex : new RegExp(req?.body?.search)}},{value: {$regex : new RegExp(req?.body?.search)}}
+        ,{productDetail: {$regex : new RegExp(req?.body?.search)}},{expenseDetail: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+        if(data){
+            if(req?.body?.last_id == 0){
+                const data1 = data.length
+                res.status(200).json({data:data,count:data1})
+            }else{
+                res.status(200).json({data:data,count:''})
+            }
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
 const delete_inventory = async(req,res) => {
     const deleteData = await Inventory.findByIdAndDelete({ _id: req.body.inventoryId });
     try {
@@ -77,5 +96,6 @@ module.exports = {
     create_inventory,
     get_inventory,
     update_inventory,
-    delete_inventory
+    delete_inventory,
+    search_inventory
 }

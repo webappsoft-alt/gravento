@@ -24,15 +24,35 @@ const create_vehicle = async(req,res)=>{
 
 const get_vehicle = async (req,res)=>{
     try {
-       const data =  await Vehicle.find({ }).sort( { _id : -1 } )
+       const data =  await Vehicle.find({ }).sort( { _id : -1 } ).limit(10).lean()
         if(data){
-            res.status(200).json(data)
+            if(req?.body?.last_id == 0){
+                const data1 = await Vehicle.find({}).count()
+                res.status(200).json({data:data,count:data1})
+            }else{
+                res.status(200).json({data:data,count:''})
+            }
         }
     } catch (error) {
         res.status(400).send(error.message);
     }
 }
-
+const search_vehicle = async (req,res)=>{
+    try {
+       const data =  await Vehicle.find({$or:[{vehicleNumber: {$regex : new RegExp(req?.body?.search)}},{vehicleModel: {$regex : new RegExp(req?.body?.search)}}
+        ,{vehicleType: {$regex : new RegExp(req?.body?.search)}},{technicalData: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+        if(data){
+            if(req?.body?.last_id == 0){
+                const data1 = data.length
+                res.status(200).json({data:data,count:data1})
+            }else{
+                res.status(200).json({data:data,count:''})
+            }
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
 const update_vehicle = async (req,res) => {
     try {
         const data = await Vehicle.findOneAndUpdate({
@@ -66,5 +86,6 @@ module.exports = {
     create_vehicle,
     get_vehicle,
     update_vehicle,
-    delete_vehicle
+    delete_vehicle,
+    search_vehicle
 }

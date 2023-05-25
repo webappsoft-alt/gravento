@@ -15,5 +15,5 @@ app.post("/createExpenses",expenses.create_expenses)
 app.get("/getExpenses",expenses.get_expenses)
 app.post("/updateExpenses",expenses.update_expenses)
 app.post("/deleteExpenses",expenses.delete_expenses)
-
+app.get("/searchExpenses",expenses.search_expense)
 module.exports  = app;
