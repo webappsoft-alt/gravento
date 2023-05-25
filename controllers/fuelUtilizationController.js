@@ -31,7 +31,7 @@ const create_fuel = async(req,res)=>{
 
 const get_fuel = async (req,res)=>{
     try {
-       const data =  await FuelUtilization.find({ }).sort( { _id : -1 } ).limit(10).lean()
+       const data =  await FuelUtilization.find({ }).sort( { _id : -1 } ).skip(req.body.last_id).limit(10).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = await FuelUtilization.find({}).count()

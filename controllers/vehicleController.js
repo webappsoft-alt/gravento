@@ -1,6 +1,4 @@
 const Vehicle = require("../models/vehiclesModel");
-
-
 const create_vehicle = async(req,res)=>{
     try {
        const vehicle =  new Vehicle({
@@ -24,7 +22,7 @@ const create_vehicle = async(req,res)=>{
 
 const get_vehicle = async (req,res)=>{
     try {
-       const data =  await Vehicle.find({ }).sort( { _id : -1 } ).limit(10).lean()
+       const data =  await Vehicle.find({ }).sort( { _id : -1 } ).limit(10).skip(req.body.last_id).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = await Vehicle.find({}).count()
