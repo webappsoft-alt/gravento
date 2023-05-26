@@ -83,6 +83,10 @@ app.use('/',cldProductionRoute)
 const cldFuelUsageRoute= require("./routes/cldFuelUsageRoute")
 app.use('/',cldFuelUsageRoute)
 
+//dispatch usage 
+const cldDispatchRoute= require("./routes/cldDispatchRoute")
+app.use('/',cldDispatchRoute)
+
 app.listen(3000,function(){
     console.log("Server is ready, running on 3000 port")
 })
