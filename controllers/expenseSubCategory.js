@@ -40,7 +40,7 @@ const get_expense_subcat = async (req,res)=>{
 
 const search_expense_subcat = async (req,res)=>{
     try {
-       const data =  await ExpenseSubCategory.find({subCatName: {$regex : new RegExp(req?.body?.search)}},{catName: {$regex : new RegExp(req?.body?.search)}}).lean()
+       const data =  await ExpenseSubCategory.find({$or:[{subCatName: {$regex : new RegExp(req?.body?.search)}},{catName: {$regex : new RegExp(req?.body?.search)}}]}).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = data.length
