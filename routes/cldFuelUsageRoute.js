@@ -11,7 +11,7 @@ app.use(bodyPraser.json())
 app.use(bodyPraser.urlencoded({extended:true}))
 
 const cldFuelUsage =  require("../controllers/cldFuelUsageController")
-app.post("/createCldProduction",cldFuelUsage.create_fuel_usage)
+app.post("/createCldFuelUsage",cldFuelUsage.create_fuel_usage)
 app.post("/getcldFuelUsage",cldFuelUsage.get_fuel_usage)
 app.post("/updatecldFuelUsage",cldFuelUsage.update_fuel_usage)
 app.post("/deletecldFuelUsage",cldFuelUsage.delete_fuel_usage)

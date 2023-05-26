@@ -28,7 +28,7 @@ const get_fuel_usage = async (req,res)=>{
        const data =  await cldFuelUsage.find({ }).sort( { _id : -1 } ).skip(req.body.last_id).limit(10).lean()
         if(data){
             if(req?.body?.last_id == 0){
-                const data1 = await cldProduction.find({}).count()
+                const data1 = await cldFuelUsage.find({}).count()
                 res.status(200).json({data:data,count:data1})
             }else{
                 res.status(200).json({data:data,count:''})
