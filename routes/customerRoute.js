@@ -33,9 +33,9 @@ app.use(bodyPraser.urlencoded({extended:true}))
 
 const customerController =  require("../controllers/customerController")
 app.post("/createCustomer",customerController.create_customer)
-app.get("/getCustomer",customerController.get_customer)
+app.post("/getCustomer",customerController.get_customer)
 app.post("/updateCustomer",customerController.update_customer)
 app.post("/deleteCustomer",customerController.delete_customer)
-app.get("/searchCustomer",customerController.search_customer)
+app.post("/searchCustomer",customerController.search_customer)
 
 module.exports  = app;

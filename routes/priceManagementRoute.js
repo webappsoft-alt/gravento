@@ -12,9 +12,9 @@ app.use(bodyPraser.urlencoded({extended:true}))
 
 const priceController =  require("../controllers/priceManagementController")
 app.post("/createPrice",priceController.create_price)
-app.get("/getPrice",priceController.get_price)
+app.post("/getPrice",priceController.get_price)
 app.post("/updatePrice",priceController.update_price)
 app.post("/deletePrice",priceController.delete_price)
-app.get("/searchPrice",priceController.search_price)
+app.post("/searchPrice",priceController.search_price)
 
 module.exports  = app;

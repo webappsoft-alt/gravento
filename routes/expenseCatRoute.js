@@ -12,8 +12,8 @@ app.use(bodyPraser.urlencoded({extended:true}))
 
 const expenseCategory =  require("../controllers/expenseCategory")
 app.post("/createExpenseCat",expenseCategory.create_expense_cat)
-app.get("/getExpenseCat",expenseCategory.get_expense_cat)
+app.post("/getExpenseCat",expenseCategory.get_expense_cat)
 app.post("/updateExpenseCat",expenseCategory.update_expense_cat)
 app.post("/deleteExpenseCat",expenseCategory.delete_expense_cat)
-app.get("/searchExpenseCat",expenseCategory.search_expense_cat)
+app.post("/searchExpenseCat",expenseCategory.search_expense_cat)
 module.exports  = app;

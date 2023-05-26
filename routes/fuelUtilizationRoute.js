@@ -12,9 +12,9 @@ app.use(bodyPraser.urlencoded({extended:true}))
 
 const fuelUtilization =  require("../controllers/fuelUtilizationController")
 app.post("/createFuel",fuelUtilization.create_fuel)
-app.get("/getFuel",fuelUtilization.get_fuel)
+app.post("/getFuel",fuelUtilization.get_fuel)
 app.post("/updateFuel",fuelUtilization.update_fuel)
 app.post("/deleteFuel",fuelUtilization.delete_fuel)
-app.get("/searchFuel",fuelUtilization.search_fuel)
+app.post("/searchFuel",fuelUtilization.search_fuel)
 
 module.exports  = app;

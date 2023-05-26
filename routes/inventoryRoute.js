@@ -12,9 +12,9 @@ app.use(bodyPraser.urlencoded({extended:true}))
 
 const inventory =  require("../controllers/inventoryController")
 app.post("/createInventory",inventory.create_inventory)
-app.get("/getInventory",inventory.get_inventory)
+app.post("/getInventory",inventory.get_inventory)
 app.post("/updateInventory",inventory.update_inventory)
 app.post("/deleteInventory",inventory.delete_inventory)
-app.get("/searchInventory",inventory.search_inventory)
+app.post("/searchInventory",inventory.search_inventory)
 
 module.exports  = app;

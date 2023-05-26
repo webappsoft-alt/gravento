@@ -12,9 +12,9 @@ app.use(bodyPraser.urlencoded({extended:true}))
 
 const productController =  require("../controllers/productController")
 app.post("/createProduct",productController.create_product)
-app.get("/getProduct",productController.get_product)
+app.post("/getProduct",productController.get_product)
 app.post("/deleteProduct",productController.delete_product)
 app.post("/updateProduct",productController.update_product)
-app.get("/searchProduct",productController.search_product)
+app.post("/searchProduct",productController.search_product)
 
 module.exports  = app;
