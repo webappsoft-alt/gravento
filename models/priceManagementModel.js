@@ -7,13 +7,13 @@ const priceManagementSchema = mongoose.Schema({
     customerDetail:{
         type:String,
     },
-    productId:{
-        type:String,
-        required:true
-    },
-    productDetail:{
-        type:String,
-    },
+    // productId:{
+    //     type:String,
+    //     required:true
+    // },
+    // productDetail:{
+    //     type:String,
+    // },
     price:{
         type:String,
         required:true

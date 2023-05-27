@@ -3,13 +3,13 @@ const Customer = require("../models/customerModel");
 
 const create_product = async(req,res)=>{
     try {
-        const customerValue = await Customer.findOne({_id:req?.body?.customerId})
+        // const customerValue = await Customer.findOne({_id:req?.body?.customerId})
        const product =  new Product({
-            customerId:req.body.customerId,
+            // customerId:req.body.customerId,
             productName:req.body.productName,  
             price:req.body.price,  
             costData:req.body.costData,  
-            customerDetail:customerValue?.firstName+' '+customerValue?.lastName
+            // customerDetail:customerValue?.firstName+' '+customerValue?.lastName
         })
             const product_data = product.save()
             try {
@@ -43,7 +43,7 @@ const get_product = async (req,res)=>{
 const search_product = async (req,res)=>{
     try {
        const data =  await Product.find({$or:[{productName: {$regex : new RegExp(req?.body?.search)}},{price: {$regex : new RegExp(req?.body?.search)}}
-        ,{costData: {$regex : new RegExp(req?.body?.search)}},{customerDetail: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+        ,{costData: {$regex : new RegExp(req?.body?.search)}}]}).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = data.length
@@ -59,15 +59,15 @@ const search_product = async (req,res)=>{
 
 const update_product = async (req,res) => {
     try {
-        const customerValue = await Customer.findOne({_id:req?.body?.customerId})
+        // const customerValue = await Customer.findOne({_id:req?.body?.customerId})
         const productData = await Product.findOneAndUpdate({
             _id:req.body.productId
         },{
-            customerId:req.body.customerId,
+            // customerId:req.body.customerId,
             productName:req.body.productName,  
             price:req.body.price,  
             costData:req.body.costData, 
-            customerDetail:customerValue?.firstName+' '+customerValue?.lastName
+            // customerDetail:customerValue?.firstName+' '+customerValue?.lastName
         })
         if (productData) {
             res.status(200).send({result:true,message:'Update Successfully'})
