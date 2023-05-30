@@ -83,9 +83,13 @@ app.use('/',cldProductionRoute)
 const cldFuelUsageRoute= require("./routes/cldFuelUsageRoute")
 app.use('/',cldFuelUsageRoute)
 
-//dispatch usage 
+//cld dispatch usage 
 const cldDispatchRoute= require("./routes/cldDispatchRoute")
 app.use('/',cldDispatchRoute)
+
+//cld Remittance usage 
+const cldRemittanceRoute= require("./routes/cldRemittanceRoute")
+app.use('/',cldRemittanceRoute)
 
 app.listen(3000,function(){
     console.log("Server is ready, running on 3000 port")
