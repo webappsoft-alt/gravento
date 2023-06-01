@@ -14,7 +14,7 @@ const create_cld_expense = async(req,res)=>{
         machineId:req.body.machineId,
         vehicleNumber:vehicleValue?.vehicleNumber,
         machineNumber:machineValue?.machineNumber,
-        transportFreight:productValue?.transportFreight
+        transportFreight:req.body?.transportFreight
         })
             const data = cldExpense_.save()
             try {
@@ -73,7 +73,7 @@ const update_cld_expense = async (req,res) => {
             machineId:req.body.machineId,
             vehicleNumber:vehicleValue?.vehicleNumber,
             machineNumber:machineValue?.machineNumber,
-            transportFreight:productValue?.transportFreight
+            transportFreight:req.body?.transportFreight
         })
         if (data) {
             res.status(200).send({result:true,message:'Update Successfully'})
