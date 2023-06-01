@@ -11,7 +11,7 @@ app.use(bodyPraser.json())
 app.use(bodyPraser.urlencoded({extended:true}))
 
 const cldRemittance =  require("../controllers/cldRemittanceController")
-app.post("/createCldProduction",cldRemittance.create_cld_remittance)
+app.post("/createCldRemittance",cldRemittance.create_cld_remittance)
 app.post("/getCldRemittance",cldRemittance.get_cld_remittance)
 app.post("/updateCldRemittance",cldRemittance.update_cld_remittance)
 app.post("/deleteCldRemittance",cldRemittance.delete_dispatch)

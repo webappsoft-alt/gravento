@@ -46,8 +46,8 @@ const get_dispatch = async (req,res)=>{
 }
 const search_dispatch = async (req,res)=>{
     try {
-       const data =  await cldDispatch.find({$or:[{vehicleOrMachine: {$regex : new RegExp(req?.body?.search)}},{gallonsDispatched: {$regex : new RegExp(req?.body?.search)}}
-        ,{percentageFilled: {$regex : new RegExp(req?.body?.search)}},{numberOfTrips: {$regex : new RegExp(req?.body?.search)}},{transportedEachTrip: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+       const data =  await cldDispatch.find({$or:[{customerDetail: {$regex : new RegExp(req?.body?.search)}},{productDetail: {$regex : new RegExp(req?.body?.search)}}
+        ,{remittance: {$regex : new RegExp(req?.body?.search)}},{paymentMethod: {$regex : new RegExp(req?.body?.search)}},{quantity: {$regex : new RegExp(req?.body?.search)}}]}).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = data.length

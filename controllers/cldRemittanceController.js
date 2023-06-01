@@ -25,7 +25,7 @@ const get_cld_remittance = async (req,res)=>{
        const data =  await CldRemittance.find({ }).sort( { _id : -1 } ).skip(req.body.last_id).limit(10).lean()
         if(data){
             if(req?.body?.last_id == 0){
-                const data1 = await cldDispatch.find({}).count()
+                const data1 = await CldRemittance.find({}).count()
                 res.status(200).json({data:data,count:data1})
             }else{
                 res.status(200).json({data:data,count:''})
@@ -53,7 +53,7 @@ const search_cld_remittance = async (req,res)=>{
 }
 const update_cld_remittance = async (req,res) => {
     try {
-        const data = await cldDispatch.findOneAndUpdate({
+        const data = await CldRemittance.findOneAndUpdate({
             _id:req.body.remittanceId
         },{
             remittanceType:req.body.remittanceType,
@@ -69,7 +69,7 @@ const update_cld_remittance = async (req,res) => {
 }
 
 const delete_dispatch = async(req,res) => {
-    const deleteData = await cldDispatch.findByIdAndDelete({ _id: req.body.remittanceId });
+    const deleteData = await CldRemittance.findByIdAndDelete({ _id: req.body.remittanceId });
     try {
       if(deleteData){
         res.status(200).send({result:true,message:'Deleted Successfully'})
