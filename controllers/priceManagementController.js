@@ -44,8 +44,8 @@ const get_price = async (req,res)=>{
 }
 const search_price = async (req,res)=>{
     try {
-       const data =  await PriceManagement.find({$or:[{price: {$regex : new RegExp(req?.body?.search)}},{reason: {$regex : new RegExp(req?.body?.search)}}
-        ,{customerDetail: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+       const data =  await PriceManagement.find({$or:[{price: {$regex : new RegExp(req?.body?.search),$options:'i'}},{reason: {$regex : new RegExp(req?.body?.search),$options:'i'}}
+        ,{customerDetail: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = data.length

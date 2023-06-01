@@ -42,8 +42,8 @@ const get_service = async (req,res)=>{
 }
 const search_service = async (req,res)=>{
     try {
-       const data =  await Service.find({$or:[{vehicleDetail: {$regex : new RegExp(req?.body?.search)}},{value: {$regex : new RegExp(req?.body?.search)}}
-        ,{serviceDate: {$regex : new RegExp(req?.body?.search)}},{serviceName: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+       const data =  await Service.find({$or:[{vehicleDetail: {$regex : new RegExp(req?.body?.search),$options:'i'}},{value: {$regex : new RegExp(req?.body?.search),$options:'i'}}
+        ,{serviceDate: {$regex : new RegExp(req?.body?.search),$options:'i'}},{serviceName: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = data.length

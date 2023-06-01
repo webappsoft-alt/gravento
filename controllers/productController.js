@@ -42,8 +42,8 @@ const get_product = async (req,res)=>{
 
 const search_product = async (req,res)=>{
     try {
-       const data =  await Product.find({$or:[{productName: {$regex : new RegExp(req?.body?.search)}},{price: {$regex : new RegExp(req?.body?.search)}}
-        ,{costData: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+       const data =  await Product.find({$or:[{productName: {$regex : new RegExp(req?.body?.search),$options:'i'}},{price: {$regex : new RegExp(req?.body?.search),$options:'i'}}
+        ,{costData: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = data.length

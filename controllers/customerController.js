@@ -60,7 +60,7 @@ const get_customer = async (req,res)=>{
 
 const search_customer = async (req,res)=>{
     try {
-       const data =  await Customer.find({$or:[{firstName: {$regex : new RegExp(req?.body?.search)}},{lastName: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+       const data =  await Customer.find({$or:[{firstName: {$regex : new RegExp(req?.body?.search),$options:'i'}},{lastName: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = data.length

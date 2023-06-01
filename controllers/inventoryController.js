@@ -67,8 +67,8 @@ const update_inventory = async (req,res) => {
 }
 const search_inventory = async (req,res)=>{
     try {
-       const data =  await Inventory.find({$or:[{quantity: {$regex : new RegExp(req?.body?.search)}},{value: {$regex : new RegExp(req?.body?.search)}}
-        ,{productDetail: {$regex : new RegExp(req?.body?.search)}},{expenseDetail: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+       const data =  await Inventory.find({$or:[{quantity: {$regex : new RegExp(req?.body?.search),$options:'i'}},{value: {$regex : new RegExp(req?.body?.search),$options:'i'}}
+        ,{productDetail: {$regex : new RegExp(req?.body?.search),$options:'i'}},{expenseDetail: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = data.length

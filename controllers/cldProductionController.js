@@ -39,8 +39,8 @@ const get_cld_prod = async (req,res)=>{
 }
 const search_cld_prod = async (req,res)=>{
     try {
-       const data =  await cldProduction.find({$or:[{productRequest: {$regex : new RegExp(req?.body?.search)}},{endTime: {$regex : new RegExp(req?.body?.search)}}
-        ,{machineUsageTime: {$regex : new RegExp(req?.body?.search)}},{startTime: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+       const data =  await cldProduction.find({$or:[{productRequest: {$regex : new RegExp(req?.body?.search),$options:'i'}},{endTime: {$regex : new RegExp(req?.body?.search),$options:'i'}}
+        ,{machineUsageTime: {$regex : new RegExp(req?.body?.search),$options:'i'}},{startTime: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = data.length

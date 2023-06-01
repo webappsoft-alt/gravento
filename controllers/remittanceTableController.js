@@ -39,8 +39,8 @@ const get_rem_table = async (req,res)=>{
 }
 const search_rem_Table = async (req,res)=>{
     try {
-       const data =  await RemittanceTable.find({$or:[{remittanceType: {$regex : new RegExp(req?.body?.search)}},{amount: {$regex : new RegExp(req?.body?.search)}}
-        ,{remittanceTabledate: {$regex : new RegExp(req?.body?.search)}},{voucherNumber: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+       const data =  await RemittanceTable.find({$or:[{remittanceType: {$regex : new RegExp(req?.body?.search),$options:'i'}},{amount: {$regex : new RegExp(req?.body?.search),$options:'i'}}
+        ,{remittanceTabledate: {$regex : new RegExp(req?.body?.search),$options:'i'}},{voucherNumber: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = data.length

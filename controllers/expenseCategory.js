@@ -20,7 +20,7 @@ const create_expense_cat = async(req,res)=>{
 
 const search_expense_cat = async (req,res)=>{
     try {
-       const data =  await ExpenseCategory.find({catName: {$regex : new RegExp(req?.body?.search)}}).lean()
+       const data =  await ExpenseCategory.find({catName: {$regex : new RegExp(req?.body?.search),$options:'i'}}).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = data.length

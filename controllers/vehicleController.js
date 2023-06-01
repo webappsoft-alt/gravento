@@ -37,8 +37,8 @@ const get_vehicle = async (req,res)=>{
 }
 const search_vehicle = async (req,res)=>{
     try {
-       const data =  await Vehicle.find({$or:[{vehicleNumber: {$regex : new RegExp(req?.body?.search)}},{vehicleModel: {$regex : new RegExp(req?.body?.search)}}
-        ,{vehicleType: {$regex : new RegExp(req?.body?.search)}},{technicalData: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+       const data =  await Vehicle.find({$or:[{vehicleNumber: {$regex : new RegExp(req?.body?.search),$options:'i'}},{vehicleModel: {$regex : new RegExp(req?.body?.search),$options:'i'}}
+        ,{vehicleType: {$regex : new RegExp(req?.body?.search),$options:'i'}},{technicalData: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = data.length

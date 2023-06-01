@@ -38,8 +38,8 @@ const get_machinary = async (req,res)=>{
 
 const search_machinary = async (req,res)=>{
     try {
-       const data =  await Machinary.find({$or:[{machineNumber: {$regex : new RegExp(req?.body?.search)}},{machineType: {$regex : new RegExp(req?.body?.search)}}
-        ,{technicalData: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+       const data =  await Machinary.find({$or:[{machineNumber: {$regex : new RegExp(req?.body?.search),$options:'i'}},{machineType: {$regex : new RegExp(req?.body?.search),$options:'i'}}
+        ,{technicalData: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = data.length

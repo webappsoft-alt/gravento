@@ -45,9 +45,9 @@ const get_prod_table = async (req,res)=>{
 }
 const search_prod_table = async (req,res)=>{
     try {
-       const data =  await Production.find({$or:[{startTime: {$regex : new RegExp(req?.body?.search)}},{endTime: {$regex : new RegExp(req?.body?.search)}}
-        ,{productDetail: {$regex : new RegExp(req?.body?.search)}},{quantity: {$regex : new RegExp(req?.body?.search)}},{productionDate: {$regex : new RegExp(req?.body?.search)}}
-        ,{productionUsageTime: {$regex : new RegExp(req?.body?.search)}},{machineUsageTime: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+       const data =  await Production.find({$or:[{startTime: {$regex : new RegExp(req?.body?.search),$options:'i'}},{endTime: {$regex : new RegExp(req?.body?.search),$options:'i'}}
+        ,{productDetail: {$regex : new RegExp(req?.body?.search),$options:'i'}},{quantity: {$regex : new RegExp(req?.body?.search),$options:'i'}},{productionDate: {$regex : new RegExp(req?.body?.search),$options:'i'}}
+        ,{productionUsageTime: {$regex : new RegExp(req?.body?.search),$options:'i'}},{machineUsageTime: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = data.length

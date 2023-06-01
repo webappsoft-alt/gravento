@@ -42,8 +42,8 @@ const get_rem_voucher = async (req,res)=>{
 
 const search_rem_voucher = async (req,res)=>{
     try {
-       const data =  await RemittanceVoucher.find({$or:[{remittanceCreater: {$regex : new RegExp(req?.body?.search)}},{status: {$regex : new RegExp(req?.body?.search)}}
-        ,{remittanceDate: {$regex : new RegExp(req?.body?.search)}},{quantity: {$regex : new RegExp(req?.body?.search)}},{recipient: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+       const data =  await RemittanceVoucher.find({$or:[{remittanceCreater: {$regex : new RegExp(req?.body?.search),$options:'i'}},{status: {$regex : new RegExp(req?.body?.search),$options:'i'}}
+        ,{remittanceDate: {$regex : new RegExp(req?.body?.search),$options:'i'}},{quantity: {$regex : new RegExp(req?.body?.search),$options:'i'}},{recipient: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = data.length

@@ -47,8 +47,8 @@ const get_expenses = async (req,res)=>{
 
 const search_expense = async (req,res)=>{
     try {
-       const data =  await Expense.find({$or:[{expensesDate: {$regex : new RegExp(req?.body?.search)}},{invoice: {$regex : new RegExp(req?.body?.search)}},{reason: {$regex : new RegExp(req?.body?.search)}},
-        {total: {$regex : new RegExp(req?.body?.search)}},{cat_name: {$regex : new RegExp(req?.body?.search)}},{subCatName: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+       const data =  await Expense.find({$or:[{expensesDate: {$regex : new RegExp(req?.body?.search),$options:'i'}},{invoice: {$regex : new RegExp(req?.body?.search),$options:'i'}},{reason: {$regex : new RegExp(req?.body?.search),$options:'i'}},
+        {total: {$regex : new RegExp(req?.body?.search),$options:'i'}},{cat_name: {$regex : new RegExp(req?.body?.search),$options:'i'}},{subCatName: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = await Expense.find({}).count()

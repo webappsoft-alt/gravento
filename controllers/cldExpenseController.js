@@ -46,8 +46,8 @@ const get_cld_expense = async (req,res)=>{
 }
 const search_cld_expense = async (req,res)=>{
     try {
-       const data =  await cldExpense.find({$or:[{diesel: {$regex : new RegExp(req?.body?.search)}},{payroll: {$regex : new RegExp(req?.body?.search)}}
-        ,{vehicleNumber: {$regex : new RegExp(req?.body?.search)}},{machineNumber: {$regex : new RegExp(req?.body?.search)}},{transportFreight: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+       const data =  await cldExpense.find({$or:[{diesel: {$regex : new RegExp(req?.body?.search),$options:'i'}},{payroll: {$regex : new RegExp(req?.body?.search),$options:'i'}}
+        ,{vehicleNumber: {$regex : new RegExp(req?.body?.search),$options:'i'}},{machineNumber: {$regex : new RegExp(req?.body?.search),$options:'i'}},{transportFreight: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = data.length

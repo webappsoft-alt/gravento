@@ -46,9 +46,9 @@ const get_fuel = async (req,res)=>{
 }
 const search_fuel = async (req,res)=>{
     try {
-       const data =  await FuelUtilization.find({$or:[{quantity: {$regex : new RegExp(req?.body?.search)}},{utilization: {$regex : new RegExp(req?.body?.search)}},
-        {numberTrips: {$regex : new RegExp(req?.body?.search)}},{milleage: {$regex : new RegExp(req?.body?.search)}},{expense: {$regex : new RegExp(req?.body?.search)}}
-        ,{vehicle: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+       const data =  await FuelUtilization.find({$or:[{quantity: {$regex : new RegExp(req?.body?.search),$options:'i'}},{utilization: {$regex : new RegExp(req?.body?.search),$options:'i'}},
+        {numberTrips: {$regex : new RegExp(req?.body?.search),$options:'i'}},{milleage: {$regex : new RegExp(req?.body?.search),$options:'i'}},{expense: {$regex : new RegExp(req?.body?.search),$options:'i'}}
+        ,{vehicle: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = data.length

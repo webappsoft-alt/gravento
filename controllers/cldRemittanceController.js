@@ -37,8 +37,8 @@ const get_cld_remittance = async (req,res)=>{
 }
 const search_cld_remittance = async (req,res)=>{
     try {
-       const data =  await CldRemittance.find({$or:[{remittanceType: {$regex : new RegExp(req?.body?.search)}},{amount: {$regex : new RegExp(req?.body?.search)}}
-        ,{voucherNo: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+       const data =  await CldRemittance.find({$or:[{remittanceType: {$regex : new RegExp(req?.body?.search),$options:'i'}},{amount: {$regex : new RegExp(req?.body?.search),$options:'i'}}
+        ,{voucherNo: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = data.length

@@ -40,8 +40,8 @@ const get_fuel_usage = async (req,res)=>{
 }
 const search_fuel_usage = async (req,res)=>{
     try {
-       const data =  await cldFuelUsage.find({$or:[{vehicleOrMachine: {$regex : new RegExp(req?.body?.search)}},{gallonsDispatched: {$regex : new RegExp(req?.body?.search)}}
-        ,{percentageFilled: {$regex : new RegExp(req?.body?.search)}},{numberOfTrips: {$regex : new RegExp(req?.body?.search)}},{transportedEachTrip: {$regex : new RegExp(req?.body?.search)}}]}).lean()
+       const data =  await cldFuelUsage.find({$or:[{vehicleOrMachine: {$regex : new RegExp(req?.body?.search),$options:'i'}},{gallonsDispatched: {$regex : new RegExp(req?.body?.search),$options:'i'}}
+        ,{percentageFilled: {$regex : new RegExp(req?.body?.search),$options:'i'}},{numberOfTrips: {$regex : new RegExp(req?.body?.search),$options:'i'}},{transportedEachTrip: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = data.length
