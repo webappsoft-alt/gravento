@@ -7,7 +7,7 @@ const create_dispatch = async(req,res)=>{
     try {
         const customerValue = await Customer.findOne({_id:req?.body?.customerId})
         const productValue = await Product.findOne({_id:req?.body?.productId})
-       const cldDispatch =  new cldDispatch({
+       const cldDispatch_ =  new cldDispatch({
         customerId:req.body.customerId,
         productId:req.body.productId,  
         quantity:req.body.quantity,  
@@ -16,7 +16,7 @@ const create_dispatch = async(req,res)=>{
         customerDetail:customerValue?.firstName+' '+customerValue?.lastName,
         productDetail:productValue?.productName
         })
-            const data = cldDispatch.save()
+            const data = cldDispatch_.save()
             try {
                 if(data){
                   res.status(200).send({result:true,message:'Added Successfully'})

@@ -12,7 +12,7 @@ const cldExpense = mongoose.Schema({
         type:String,
         required:true
     },
-    vehicleName:{
+    vehicleNumber:{
         type:String,
         required:true
     },
@@ -20,7 +20,7 @@ const cldExpense = mongoose.Schema({
         type:String,
         required:true
     },
-    machineName:{
+    machineNumber:{
         type:String,
     },
     transportFreight:{
