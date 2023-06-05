@@ -1,30 +1,34 @@
 const mongoose = require("mongoose");
 const cldExpense = mongoose.Schema({
-    diesel:{
+    catId:{
         type:String,
         required:true
     },
-    payroll:{
+    subCatId:{
         type:String,
         required:true
     },
-   vehicleId:{
+    expensesDate:{
         type:String,
         required:true
     },
-    vehicleNumber:{
+    invoice:{
         type:String,
         required:true
     },
-    machineId:{
+    reason:{
         type:String,
         required:true
     },
-    machineNumber:{
+    total:{
         type:String,
+        required:true
     },
-    transportFreight:{
-        type:String,
+    cat_name:{
+        type:String
+    },
+    subCatName:{
+        type:String
     }
 })
 module.exports = mongoose.model("cldExpense",cldExpense)

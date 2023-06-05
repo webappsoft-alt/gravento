@@ -1,24 +1,34 @@
 const mongoose = require("mongoose");
 const cldFuelUsage = mongoose.Schema({
-    vehicleOrMachine:{
+    expenseId:{
         type:String,
         required:true
     },
-    gallonsDispatched:{
+    vehicleId:{
         type:String,
         required:true
     },
-   percentageFilled:{
+    quantity:{
         type:String,
         required:true
     },
-    numberOfTrips:{
+    utilization:{
         type:String,
         required:true
     },
-    transportedEachTrip:{
+    numberTrips:{
         type:String,
         required:true
+    },
+    milleage:{
+        type:String,
+        required:true
+    },
+    expense:{
+        type:String,
+    },
+    vehicle:{
+        type:String,
     }
 })
 module.exports = mongoose.model("cldFuelUsage",cldFuelUsage)

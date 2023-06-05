@@ -1,16 +1,22 @@
 const cldFuelUsage = require("../models/cldFuelUsageModel");
-
+const Expense = require("../models/expensesModel");
+const Vehicle = require("../models/vehiclesModel");
 
 const create_fuel_usage = async(req,res)=>{
     try {
-       const fuelUsage =  new cldFuelUsage({
-        vehicleOrMachine:req.body.vehicleOrMachine,
-        gallonsDispatched:req.body.gallonsDispatched,  
-        percentageFilled:req.body.percentageFilled,  
-        numberOfTrips:req.body.numberOfTrips,
-        transportedEachTrip:req.body.transportedEachTrip
+        const expenseValue = await Expense.findOne({_id:req?.body?.expenseId})
+        const vehicleValue = await Vehicle.findOne({_id:req?.body?.vehicleId})
+       const fuel =  new cldFuelUsage({
+        expenseId:req.body.expenseId,
+        vehicleId:req.body.vehicleId,  
+        quantity:req.body.quantity,  
+        utilization:req.body.utilization,
+        numberTrips:req.body.numberTrips,
+        milleage:req.body.milleage,
+        expense:expenseValue.invoice,
+        vehicle:vehicleValue.vehicleNumber
         })
-            const data = fuelUsage.save()
+            const data = fuel.save()
             try {
                 if(data){
                   res.status(200).send({result:true,message:'Added Successfully'})
@@ -40,8 +46,9 @@ const get_fuel_usage = async (req,res)=>{
 }
 const search_fuel_usage = async (req,res)=>{
     try {
-       const data =  await cldFuelUsage.find({$or:[{vehicleOrMachine: {$regex : new RegExp(req?.body?.search),$options:'i'}},{gallonsDispatched: {$regex : new RegExp(req?.body?.search),$options:'i'}}
-        ,{percentageFilled: {$regex : new RegExp(req?.body?.search),$options:'i'}},{numberOfTrips: {$regex : new RegExp(req?.body?.search),$options:'i'}},{transportedEachTrip: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
+       const data =  await cldFuelUsage.find({$or:[{quantity: {$regex : new RegExp(req?.body?.search),$options:'i'}},{utilization: {$regex : new RegExp(req?.body?.search),$options:'i'}},
+       {numberTrips: {$regex : new RegExp(req?.body?.search),$options:'i'}},{milleage: {$regex : new RegExp(req?.body?.search),$options:'i'}},{expense: {$regex : new RegExp(req?.body?.search),$options:'i'}}
+       ,{vehicle: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = data.length
@@ -56,14 +63,19 @@ const search_fuel_usage = async (req,res)=>{
 }
 const update_fuel_usage = async (req,res) => {
     try {
+        const expenseValue = await Expense.findOne({_id:req?.body?.expenseId})
+        const vehicleValue = await Vehicle.findOne({_id:req?.body?.vehicleId})
         const data = await cldFuelUsage.findOneAndUpdate({
-            _id:req.body.fuelUsageId
+            _id:req.body.utilId
         },{
-            vehicleOrMachine:req.body.vehicleOrMachine,
-            gallonsDispatched:req.body.gallonsDispatched,  
-            percentageFilled:req.body.percentageFilled,  
-            numberOfTrips:req.body.numberOfTrips,
-            transportedEachTrip:req.body.transportedEachTrip
+            expenseId:req.body.expenseId,
+            vehicleId:req.body.vehicleId,  
+            quantity:req.body.quantity,  
+            utilization:req.body.utilization,
+            numberTrips:req.body.numberTrips,
+            milleage:req.body.milleage,
+            expense:expenseValue.invoice,
+            vehicle:vehicleValue.vehicleNumber
         })
         if (data) {
             res.status(200).send({result:true,message:'Update Successfully'})
@@ -74,7 +86,7 @@ const update_fuel_usage = async (req,res) => {
 }
 
 const delete_fuel_usage = async(req,res) => {
-    const deleteData = await cldFuelUsage.findByIdAndDelete({ _id: req.body.fuelUsageId });
+    const deleteData = await cldFuelUsage.findByIdAndDelete({ _id: req.body.utilId });
     try {
       if(deleteData){
         res.status(200).send({result:true,message:'Deleted Successfully'})

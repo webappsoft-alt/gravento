@@ -1,20 +1,21 @@
 const cldExpense = require("../models/cldExpenseModel");
-const Vehicle = require("../models/vehiclesModel");
-const Machinary = require("../models/machinaryModel");
+const ExpenseCategory = require("../models/expenseCategory");
+const ExpenseSubCategory = require("../models/expenseSubCategory");
 
 
 const create_cld_expense = async(req,res)=>{
     try {
-        const vehicleValue = await Vehicle.findOne({_id:req?.body?.vehicleId})
-        const machineValue = await Machinary.findOne({_id:req?.body?.machineId})
+        const catValue = await ExpenseCategory.findOne({_id:req?.body?.catId})
+        const subCatValue = await ExpenseSubCategory.findOne({_id:req?.body?.subCatId})
        const cldExpense_ =  new cldExpense({
-        diesel:req.body.diesel,
-        payroll:req.body.payroll,  
-        vehicleId:req.body.vehicleId,  
-        machineId:req.body.machineId,
-        vehicleNumber:vehicleValue?.vehicleNumber,
-        machineNumber:machineValue?.machineNumber,
-        transportFreight:req.body?.transportFreight
+        catId:req.body.catId,
+        subCatId:req.body.subCatId,
+        expensesDate:req.body.expensesDate,
+        invoice:req.body.invoice,  
+        reason:req.body.reason,  
+        total:req.body.total,
+        cat_name:catValue.catName,
+        subCatName:subCatValue.subCatName
         })
             const data = cldExpense_.save()
             try {
@@ -46,8 +47,8 @@ const get_cld_expense = async (req,res)=>{
 }
 const search_cld_expense = async (req,res)=>{
     try {
-       const data =  await cldExpense.find({$or:[{diesel: {$regex : new RegExp(req?.body?.search),$options:'i'}},{payroll: {$regex : new RegExp(req?.body?.search),$options:'i'}}
-        ,{vehicleNumber: {$regex : new RegExp(req?.body?.search),$options:'i'}},{machineNumber: {$regex : new RegExp(req?.body?.search),$options:'i'}},{transportFreight: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
+       const data =  await cldExpense.find({$or:[{expensesDate: {$regex : new RegExp(req?.body?.search),$options:'i'}},{invoice: {$regex : new RegExp(req?.body?.search),$options:'i'}},{reason: {$regex : new RegExp(req?.body?.search),$options:'i'}},
+       {total: {$regex : new RegExp(req?.body?.search),$options:'i'}},{cat_name: {$regex : new RegExp(req?.body?.search),$options:'i'}},{subCatName: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = data.length
@@ -62,18 +63,19 @@ const search_cld_expense = async (req,res)=>{
 }
 const update_cld_expense = async (req,res) => {
     try {
-        const vehicleValue = await Vehicle.findOne({_id:req?.body?.vehicleId})
-        const machineValue = await Machinary.findOne({_id:req?.body?.machineId})
+        const catValue = await ExpenseCategory.findOne({_id:req?.body?.catId})
+        const subCatValue = await ExpenseSubCategory.findOne({_id:req?.body?.subCatId})
         const data = await cldExpense.findOneAndUpdate({
             _id:req.body.expenseId
         },{
-            diesel:req.body.diesel,
-            payroll:req.body.payroll,  
-            vehicleId:req.body.vehicleId,  
-            machineId:req.body.machineId,
-            vehicleNumber:vehicleValue?.vehicleNumber,
-            machineNumber:machineValue?.machineNumber,
-            transportFreight:req.body?.transportFreight
+            expensesDate:req.body.expensesDate,
+            invoice:req.body.invoice,  
+            reason:req.body.reason,  
+            total:req.body.total,
+            catId:req.body.catId,
+            subCatId:req.body.subCatId,
+            cat_name:catValue.catName,
+            subCatName:subCatValue.subCatName
         })
         if (data) {
             res.status(200).send({result:true,message:'Update Successfully'})

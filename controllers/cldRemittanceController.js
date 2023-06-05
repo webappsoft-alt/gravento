@@ -1,11 +1,14 @@
 const CldRemittance = require("../models/cldRemittanceModel");
-
+const RemittanceTable = require("../models/remittaceTableModel");
 const create_cld_remittance = async(req,res)=>{
     try {
        const cldRemittance =  new CldRemittance({
-        remittanceType:req.body.remittanceType,
-        amount:req.body.amount,  
-        voucherNo:req.body.voucherNo,  
+        remittanceCreater:req.body.remittanceCreater,
+        status:req.body.status,  
+        remittanceDate:req.body.remittanceDate,  
+        quantity:req.body.quantity,  
+        recipient:req.body.recipient,
+        voucherNumber:Math.floor(100000 + Math.random() * 900000)
         })
             const data = cldRemittance.save()
             try {
@@ -37,8 +40,8 @@ const get_cld_remittance = async (req,res)=>{
 }
 const search_cld_remittance = async (req,res)=>{
     try {
-       const data =  await CldRemittance.find({$or:[{remittanceType: {$regex : new RegExp(req?.body?.search),$options:'i'}},{amount: {$regex : new RegExp(req?.body?.search),$options:'i'}}
-        ,{voucherNo: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
+       const data =  await CldRemittance.find({$or:[{remittanceCreater: {$regex : new RegExp(req?.body?.search),$options:'i'}},{status: {$regex : new RegExp(req?.body?.search),$options:'i'}}
+       ,{remittanceDate: {$regex : new RegExp(req?.body?.search),$options:'i'}},{quantity: {$regex : new RegExp(req?.body?.search),$options:'i'}},{recipient: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = data.length
@@ -54,11 +57,13 @@ const search_cld_remittance = async (req,res)=>{
 const update_cld_remittance = async (req,res) => {
     try {
         const data = await CldRemittance.findOneAndUpdate({
-            _id:req.body.remittanceId
+            _id:req.body.remId
         },{
-            remittanceType:req.body.remittanceType,
-            amount:req.body.amount,  
-            voucherNo:req.body.voucherNo,  
+            remittanceCreater:req.body.remittanceCreater,
+            status:req.body.status,  
+            remittanceDate:req.body.remittanceDate,  
+            quantity:req.body.quantity,  
+            recipient:req.body.recipient,
         })
         if (data) {
             res.status(200).send({result:true,message:'Update Successfully'})
@@ -69,7 +74,7 @@ const update_cld_remittance = async (req,res) => {
 }
 
 const delete_dispatch = async(req,res) => {
-    const deleteData = await CldRemittance.findByIdAndDelete({ _id: req.body.remittanceId });
+    const deleteData = await CldRemittance.findByIdAndDelete({ _id: req.body.remId });
     try {
       if(deleteData){
         res.status(200).send({result:true,message:'Deleted Successfully'})
