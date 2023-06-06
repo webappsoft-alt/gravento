@@ -34,7 +34,7 @@ const get_cld_prod = async (req,res)=>{
         const data =  await cldProduction.find({ }).sort( { _id : -1 } ).skip(req.body.last_id).limit(10).lean()
          if(data){
              if(req?.body?.last_id == 0){
-                 const data1 = await Production.find({}).count()
+                 const data1 = await cldProduction.find({}).count()
                  res.status(200).json({data:data,count:data1})
              }else{
                  res.status(200).json({data:data,count:''})
@@ -65,8 +65,8 @@ const search_cld_prod = async (req,res)=>{
 
 const update_cld_prod = async (req,res) => {
     try {
-        const productValue = await cldProduction.findOne({_id:req?.body?.productId})
-        const data = await Production.findOneAndUpdate({
+        const productValue = await Product.findOne({_id:req?.body?.productId})
+        const data = await cldProduction.findOneAndUpdate({
             _id:req.body.cldProdId
         },{
             productRequest:req.body.productRequest,
