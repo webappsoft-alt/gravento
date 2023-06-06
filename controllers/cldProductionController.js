@@ -1,10 +1,11 @@
 const cldProduction = require("../models/cldProductionModel");
+const Product = require("../models/productModel");
 
 
 const create_cld_prod = async(req,res)=>{
     try {
-        const productValue = await cldProduction.findOne({_id:req?.body?.productId})
-       const production =  new Production({
+        const productValue = await Product.findOne({_id:req?.body?.productId})
+       const production =  new cldProduction({
         productRequest:req.body.productRequest,
         startTime:req.body.startTime,
         endTime:req.body.endTime,  
