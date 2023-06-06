@@ -56,7 +56,7 @@ const search_rem_Table = async (req,res)=>{
 
 const update_rem_Table = async (req,res) => {
     try {
-        const data = await RemittanceVoucher.findOneAndUpdate({
+        const data = await RemittanceTable.findOneAndUpdate({
             _id:req.body.remTableId
         },{
             remittanceType:req.body.remittanceType,
