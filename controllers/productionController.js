@@ -1,9 +1,10 @@
 const Production = require("../models/productionModel");
 const Product = require("../models/productModel");
-
+const Inventory = require("../models/inventoryModel");
 
 const create_prod_table = async(req,res)=>{
     try {
+        let quantity;
         const productValue = await Product.findOne({_id:req?.body?.productId})
        const production =  new Production({
         startTime:req.body.startTime,
@@ -19,6 +20,16 @@ const create_prod_table = async(req,res)=>{
             try {
                 if(data){
                   res.status(200).send({result:true,message:'Added Successfully'})
+             
+                  const inventory = await Inventory.findOne({productId:req?.body?.productId})
+                  if(inventory){
+                      quantity = parseInt(inventory?.quantity) +  parseInt(req.body.quantity)
+                      const data = await Inventory.findOneAndUpdate({
+                            productId:req.body.productId
+                        },{ 
+                         quantity:quantity,  
+                     })
+                  }
                 }   
             } catch (error) {
                 res.status(200).send(error.message)

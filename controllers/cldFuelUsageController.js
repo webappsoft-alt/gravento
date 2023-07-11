@@ -13,8 +13,8 @@ const create_fuel_usage = async(req,res)=>{
         utilization:req.body.utilization,
         numberTrips:req.body.numberTrips,
         milleage:req.body.milleage,
-        expense:expenseValue.invoice,
-        vehicle:vehicleValue.vehicleNumber
+        expense:expenseValue?.invoice,
+        vehicle:vehicleValue?.vehicleNumber
         })
             const data = fuel.save()
             try {
