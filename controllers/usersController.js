@@ -38,7 +38,7 @@ const create_users = async(req,res)=>{
             email:req.body.email,  
             password:req.body.password,  
             phone:req.body.phone,  
-            status:req.body.user,  
+            status:req.body.status,  
             })
             const data = users.save()
             try {
