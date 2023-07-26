@@ -99,6 +99,10 @@ app.use('/',cldExpenseRoute)
 const salesRoute= require("./routes/salesRoute")
 app.use('/',salesRoute)
 
+//users usage 
+const usersRoute= require("./routes/usersRoute")
+app.use('/',usersRoute)
+
 app.listen(3000,function(){
     console.log("Server is ready, running on 3000 port")
 })
