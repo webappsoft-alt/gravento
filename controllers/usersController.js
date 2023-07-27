@@ -15,9 +15,12 @@ const login = async (req,res)=>{
     try {
         const sPassword = await securePassword(req?.body?.password)
         if(sPassword){
-         const data = await Users.findOne({email:req?.body?.email},{password:sPassword}).then(res_=>{
+            const email = req?.body?.email;
+           const password = sPassword;
+         const data = await Users.findOne({email:email},{password:password}).then(async res_=>{
             if(res_){
-                res.status(200).send({result:true,message:'Added Successfully',data:res_})
+                const user = await Users.findOne({_id:res_._id}, { projection: { password: 0 }})
+                res.status(200).send({result:true,message:'Added Successfully',data:user})
             }else{
                 res.status(200).send({result:false,message:'Error, Try again'})           
             }
