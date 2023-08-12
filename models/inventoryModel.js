@@ -20,6 +20,9 @@ const inventory = mongoose.Schema({
     },
     value:{
         type:String,
+    },
+    createdAt:{
+        type:String
     }
 })
 module.exports = mongoose.model("inventory",inventory)

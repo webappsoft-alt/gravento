@@ -31,11 +31,20 @@ const create_dispatch = async(req,res)=>{
 
 const get_dispatch = async (req,res)=>{
     try {
+        let arr = []
+        let prod;
        const data =  await cldDispatch.find({ }).sort( { _id : -1 } ).skip(req.body.last_id).limit(10).lean()
         if(data){
             if(req?.body?.last_id == 0){
+                for(let i=0; i < data.length; i++){
+                    prod =  await Product.findOne({_id:data[i]?.productId})
+                    arr.push({customerDetail:data[i].customerDetail,customerId:data[i].customerId,dateAdded:data[i].dateAdded,paymentMethod:data[i].paymentMethod,
+                        productId:data[i].productId,quantity:data[i].quantity,remittance:data[i].remittance,price:prod?.price})
+                }
+                // arr = data;
+                // arr['price'] = price;
                 const data1 = await cldDispatch.find({}).count()
-                res.status(200).json({data:data,count:data1})
+                res.status(200).json({data:arr,count:data1})
             }else{
                 res.status(200).json({data:data,count:''})
             }

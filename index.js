@@ -103,6 +103,10 @@ app.use('/',salesRoute)
 const usersRoute= require("./routes/usersRoute")
 app.use('/',usersRoute)
 
+//Expense Graph 
+const dashboardRoute= require("./routes/dashboardRoute")
+app.use('/',dashboardRoute)
+
 app.listen(3000,function(){
     console.log("Server is ready, running on 3000 port")
 })

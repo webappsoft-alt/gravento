@@ -29,6 +29,9 @@ const cldDispatch = mongoose.Schema({
     },
     productDetail:{
         type:String,
+    },
+    createdAt:{
+        type:String,
     }
 })
 module.exports = mongoose.model("sales",cldDispatch)

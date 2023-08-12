@@ -7,13 +7,22 @@ const create_inventory = async(req,res)=>{
     try {
         const productValue = await Product.findOne({_id:req?.body?.productId})
         const expenseValue = await Expense.findOne({_id:req?.body?.expenseId})
+        
+        let currDate = new Date();
+        let month = parseFloat(currDate.getMonth())+1;
+        month = month<10 ? '0'+month : month
+
+        let day = parseFloat(currDate.getDate());
+        day = day<10 ? '0'+day : day
+
        const inventory =  new Inventory({
         productId:req.body.productId,
         expenseId:req.body.expenseId,  
         quantity:req.body.quantity,  
         value:req.body.value,  
         productDetail:productValue?.productName,
-        expenseDetail:expenseValue?.invoice
+        expenseDetail:expenseValue?.invoice,
+        createdAt:currDate.getFullYear()+'/'+month+'/'+day
         })
             const data = inventory.save()
             try {

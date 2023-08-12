@@ -7,16 +7,24 @@ const create_sales = async(req,res)=>{
     try {
         const customerValue = await Customer.findOne({_id:req?.body?.customerId})
         const productValue = await Product.findOne({_id:req?.body?.productId})
-       const sales =  new Sales({
-        customerId:req.body.customerId,
-        productId:req.body.productId,  
-        quantity:req.body.quantity,  
-        paymentMethod:req.body.paymentMethod,
-        quantityPrice:req?.body?.quantityPrice,
-        remittance:req.body.remittance,
-        customerDetail:customerValue?.firstName+' '+customerValue?.lastName,
-        productDetail:productValue?.productName
-        })
+        let currDate = new Date();
+        let month = parseFloat(currDate.getMonth())+1;
+        month = month<10 ? '0'+month : month
+
+        let day = parseFloat(currDate.getDate());
+        day = day<10 ? '0'+day : day
+
+        const sales =  new Sales({
+            customerId:req.body.customerId,
+            productId:req.body.productId,  
+            quantity:req.body.quantity,  
+            paymentMethod:req.body.paymentMethod,
+            quantityPrice:req?.body?.quantityPrice,
+            remittance:req.body.remittance,
+            customerDetail:customerValue?.firstName+' '+customerValue?.lastName,
+            productDetail:productValue?.productName,
+            createdAt:currDate.getFullYear()+'/'+month+'/'+day
+            })
             const data = sales.save()
             try {
                 if(data){
