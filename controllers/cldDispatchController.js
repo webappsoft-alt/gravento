@@ -1,7 +1,7 @@
 const cldDispatch = require("../models/cldDispatchModel");
 const Customer = require("../models/customerModel");
 const Product = require("../models/productModel");
-
+const Inventory = require("../models/inventoryModel");
 
 const create_dispatch = async(req,res)=>{
     try {
@@ -20,6 +20,33 @@ const create_dispatch = async(req,res)=>{
             try {
                 if(data){
                   res.status(200).send({result:true,message:'Added Successfully'})
+                  const inventory = await Inventory.findOne({productId:req?.body?.productId})
+                  if(inventory){
+                      quantity = parseInt(inventory?.quantity) -  parseInt(req.body.quantity)
+                      const data = await Inventory.findOneAndUpdate({
+                            productId:req.body.productId
+                        },{ 
+                         quantity:quantity,  
+                     })
+                  }else{
+                    let currDate = new Date();
+                    let month = parseFloat(currDate.getMonth())+1;
+                    month = month<10 ? '0'+month : month
+            
+                        let day = parseFloat(currDate.getDate());
+                        day = day<10 ? '0'+day : day
+                
+                        const inventory =  new Inventory({
+                            productId:req.body.productId,
+                            expenseId:'',  
+                            quantity:req.body.quantity,  
+                            value:'',  
+                            productDetail:productValue?.productName,
+                            expenseDetail:'',
+                            createdAt:currDate.getFullYear()+'/'+month+'/'+day
+                            })
+                            const data = inventory.save()
+                  }
                 }   
             } catch (error) {
                 res.status(200).send(error.message)
@@ -38,7 +65,7 @@ const get_dispatch = async (req,res)=>{
             if(req?.body?.last_id == 0){
                 for(let i=0; i < data.length; i++){
                     prod =  await Product.findOne({_id:data[i]?.productId})
-                    arr.push({customerDetail:data[i].customerDetail,customerId:data[i].customerId,dateAdded:data[i].dateAdded,paymentMethod:data[i].paymentMethod,
+                    arr.push({customerDetail:data[i].customerDetail,productDetail:data[i].productDetail,customerId:data[i].customerId,dateAdded:data[i].dateAdded,paymentMethod:data[i].paymentMethod,
                         productId:data[i].productId,quantity:data[i].quantity,remittance:data[i].remittance,price:prod?.price})
                 }
                 // arr = data;

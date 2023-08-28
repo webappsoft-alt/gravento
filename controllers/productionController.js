@@ -20,15 +20,35 @@ const create_prod_table = async(req,res)=>{
             try {
                 if(data){
                   res.status(200).send({result:true,message:'Added Successfully'})
-             
                   const inventory = await Inventory.findOne({productId:req?.body?.productId})
                   if(inventory){
+                    console.log(inventory?.quantity)
+                    console.log(req.body.quantity)
+
                       quantity = parseInt(inventory?.quantity) +  parseInt(req.body.quantity)
                       const data = await Inventory.findOneAndUpdate({
                             productId:req.body.productId
                         },{ 
                          quantity:quantity,  
                      })
+                  }else{
+                    let currDate = new Date();
+                    let month = parseFloat(currDate.getMonth())+1;
+                    month = month<10 ? '0'+month : month
+            
+                        let day = parseFloat(currDate.getDate());
+                        day = day<10 ? '0'+day : day
+                
+                        const inventory =  new Inventory({
+                            productId:req.body.productId,
+                            expenseId:'',  
+                            quantity:req.body.quantity,  
+                            value:'',  
+                            productDetail:productValue?.productName,
+                            expenseDetail:'',
+                            createdAt:currDate.getFullYear()+'/'+month+'/'+day
+                            })
+                            const data = inventory.save()
                   }
                 }   
             } catch (error) {

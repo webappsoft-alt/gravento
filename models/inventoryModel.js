@@ -6,7 +6,6 @@ const inventory = mongoose.Schema({
     },
     expenseId:{
         type:String,
-        required:true
     },
     productDetail:{
         type:String
