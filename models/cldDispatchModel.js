@@ -25,6 +25,10 @@ const cldDispatch = mongoose.Schema({
     },
     productDetail:{
         type:String,
-    }
+    },
+    comment:{
+        type:String,
+    },
+
 })
 module.exports = mongoose.model("cldDispatch",cldDispatch)
