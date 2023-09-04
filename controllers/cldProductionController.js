@@ -1,5 +1,6 @@
 const cldProduction = require("../models/cldProductionModel");
 const Product = require("../models/productModel");
+const Inventory = require("../models/inventoryModel");
 
 
 const create_cld_prod = async(req,res)=>{
@@ -18,13 +19,40 @@ const create_cld_prod = async(req,res)=>{
         })
             const data = production.save()
             try {
-                if(data){
-                  res.status(200).send({result:true,message:'Added Successfully'})
-                }   
-            } catch (error) {
-                res.status(200).send(error.message)
+            if (data) {
+                res.status(200).send({ result: true, message: 'Added Successfully' })
+                const inventory = await Inventory.findOne({ productId: req?.body?.productId })
+                if (inventory) {
+                    quantity = parseInt(inventory?.quantity) + parseInt(req.body.quantity)
+                    const data = await Inventory.findOneAndUpdate({
+                        productId: req.body.productId
+                    }, {
+                        quantity: quantity,
+                    })
+                } else {
+                    let currDate = new Date();
+                    let month = parseFloat(currDate.getMonth()) + 1;
+                    month = month < 10 ? '0' + month : month
+
+                    let day = parseFloat(currDate.getDate());
+                    day = day < 10 ? '0' + day : day
+
+                    const inventory = new Inventory({
+                        productId: req.body.productId,
+                        expenseId: '',
+                        quantity: req.body.quantity,
+                        value: '',
+                        productDetail: productValue?.productName,
+                        expenseDetail: '',
+                        createdAt: currDate.getFullYear() + '/' + month + '/' + day
+                    })
+                    const data = inventory.save()
+                }
             }
-            } catch (error) {
+        } catch (error) {
+            res.status(200).send(error.message)
+        }
+         } catch (error) {
             res.status(400).send(error.message);
     }
 }
