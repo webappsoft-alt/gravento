@@ -29,6 +29,5 @@ const cldDispatch = mongoose.Schema({
     comment:{
         type:String,
     },
-
 })
 module.exports = mongoose.model("cldDispatch",cldDispatch)

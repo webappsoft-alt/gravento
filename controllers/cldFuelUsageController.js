@@ -13,6 +13,8 @@ const create_fuel_usage = async(req,res)=>{
         utilization:req.body.utilization,
         numberTrips:req.body.numberTrips,
         milleage:req.body.milleage,
+        machineId:req.body.machineId,
+        machineNumber:req.body.machineNumber,
         expense:expenseValue?.invoice,
         vehicle:vehicleValue?.vehicleNumber
         })
@@ -47,7 +49,9 @@ const get_fuel_usage = async (req,res)=>{
 const search_fuel_usage = async (req,res)=>{
     try {
        const data =  await cldFuelUsage.find({$or:[{quantity: {$regex : new RegExp(req?.body?.search),$options:'i'}},{utilization: {$regex : new RegExp(req?.body?.search),$options:'i'}},
-       {numberTrips: {$regex : new RegExp(req?.body?.search),$options:'i'}},{milleage: {$regex : new RegExp(req?.body?.search),$options:'i'}},{expense: {$regex : new RegExp(req?.body?.search),$options:'i'}}
+       {numberTrips: {$regex : new RegExp(req?.body?.search),$options:'i'}},
+       {machineNumber: {$regex : new RegExp(req?.body?.search),$options:'i'}},
+       {milleage: {$regex : new RegExp(req?.body?.search),$options:'i'}},{expense: {$regex : new RegExp(req?.body?.search),$options:'i'}}
        ,{vehicle: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
         if(data){
             if(req?.body?.last_id == 0){
@@ -73,6 +77,8 @@ const update_fuel_usage = async (req,res) => {
             quantity:req.body.quantity,  
             utilization:req.body.utilization,
             numberTrips:req.body.numberTrips,
+            machineId:req.body.machineId,
+            machineNumber:req.body.machineNumber,
             milleage:req.body.milleage,
             expense:expenseValue.invoice,
             vehicle:vehicleValue.vehicleNumber

@@ -29,6 +29,13 @@ const cldFuelUsage = mongoose.Schema({
     },
     vehicle:{
         type:String,
-    }
+    },
+    machineNumber:{
+        type:String,
+    },
+    machineId:{
+        type:String,
+        required:true
+    },
 })
 module.exports = mongoose.model("cldFuelUsage",cldFuelUsage)
