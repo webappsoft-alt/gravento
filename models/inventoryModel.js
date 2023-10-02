@@ -22,6 +22,9 @@ const inventory = mongoose.Schema({
     },
     createdAt:{
         type:String
+    },
+    units:{
+        type:String
     }
 })
 module.exports = mongoose.model("inventory",inventory)

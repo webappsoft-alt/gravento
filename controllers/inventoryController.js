@@ -20,6 +20,7 @@ const create_inventory = async(req,res)=>{
         expenseId:req.body.expenseId,  
         quantity:req.body.quantity,  
         value:req.body.value,  
+        units:req.body.units,  
         productDetail:productValue?.productName,
         expenseDetail:expenseValue?.invoice,
         createdAt:currDate.getFullYear()+'/'+month+'/'+day
@@ -64,6 +65,7 @@ const update_inventory = async (req,res) => {
             expenseId:req.body.expenseId,  
             quantity:req.body.quantity,  
             value:req.body.value, 
+            units:req.body.units,  
             productDetail:productValue?.productName,
             expenseDetail:expenseValue?.invoice
         })
@@ -77,7 +79,9 @@ const update_inventory = async (req,res) => {
 const search_inventory = async (req,res)=>{
     try {
        const data =  await Inventory.find({$or:[{quantity: {$regex : new RegExp(req?.body?.search),$options:'i'}},{value: {$regex : new RegExp(req?.body?.search),$options:'i'}}
-        ,{productDetail: {$regex : new RegExp(req?.body?.search),$options:'i'}},{expenseDetail: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
+        ,{productDetail: {$regex : new RegExp(req?.body?.search),$options:'i'}}
+        ,{units: {$regex : new RegExp(req?.body?.search),$options:'i'}}
+        ,{expenseDetail: {$regex : new RegExp(req?.body?.search),$options:'i'}}]}).lean()
         if(data){
             if(req?.body?.last_id == 0){
                 const data1 = data.length

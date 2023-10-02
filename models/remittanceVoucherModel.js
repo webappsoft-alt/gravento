@@ -20,6 +20,18 @@ const remittanceVoucher = mongoose.Schema({
         type:String,
         required:true
     },
+    remittanceType:{
+        type:String,
+        required:true
+    },
+    remittanceNumId:{
+        type:String,
+        required:true
+    },
+    remittanceNumber:{
+        type:String,
+        required:true
+    },
     recipientDetail:{
         type:String,
     },

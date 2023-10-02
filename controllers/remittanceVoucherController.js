@@ -9,6 +9,9 @@ const create_rem_voucher = async(req,res)=>{
            remittanceDate:req.body.remittanceDate,  
            quantity:req.body.quantity,  
            recipient:req.body.recipient,
+           remittanceNumber:req.body.remittanceNumber,
+           remittanceType:req.body.remittanceType,
+           remittanceNumId:req.body.remittanceNumId,
            voucherNumber:Math.floor(100000 + Math.random() * 900000)
         })
             const data = remittanceVoucher.save()
@@ -67,6 +70,9 @@ const update_rem_voucher = async (req,res) => {
             remittanceDate:req.body.remittanceDate,  
             quantity:req.body.quantity,  
             recipient:req.body.recipient,
+            remittanceNumber:req.body.remittanceNumber,
+            remittanceNumId:req.body.remittanceNumId,
+            remittanceType:req.body.remittanceType,
         })
         if (data) {
             res.status(200).send({result:true,message:'Update Successfully'})

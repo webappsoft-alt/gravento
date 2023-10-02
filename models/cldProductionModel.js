@@ -43,6 +43,12 @@ const cldProduction = mongoose.Schema({
     machineUsageTime:{
         type:String,
         required:true
-    }
+    },
+    comment: {
+        type: String,
+    },
+    bayCoalTrip: {
+        type: String,
+    },
 })
 module.exports = mongoose.model("cldProduction",cldProduction)

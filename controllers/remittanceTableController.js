@@ -4,10 +4,10 @@ const RemittanceTable = require("../models/remittaceTableModel");
 const create_rem_table = async(req,res)=>{
     try {
        const remittanceTable =  new RemittanceTable({
-          remittanceType:req.body.remittanceType,
+        //   remittanceType:req.body.remittanceType,
            amount:req.body.amount,  
            remittanceTabledate:req.body.remittanceTabledate,  
-           voucherNumber:req.body.voucherNumber,  
+        //    voucherNumber:req.body.voucherNumber,  
         })
             const data = remittanceTable.save()
             try {
@@ -59,10 +59,10 @@ const update_rem_Table = async (req,res) => {
         const data = await RemittanceTable.findOneAndUpdate({
             _id:req.body.remTableId
         },{
-            remittanceType:req.body.remittanceType,
+            // remittanceType:req.body.remittanceType,
             amount:req.body.amount,  
             remittanceTabledate:req.body.remittanceTabledate,  
-            voucherNumber:req.body.voucherNumber, 
+            // voucherNumber:req.body.voucherNumber, 
         })
         if (data) {
             res.status(200).send({result:true,message:'Update Successfully'})
