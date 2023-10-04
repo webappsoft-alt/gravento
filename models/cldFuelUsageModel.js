@@ -6,7 +6,7 @@ const cldFuelUsage = mongoose.Schema({
     },
     vehicleId:{
         type:String,
-        required:true
+        // required:true
     },
     quantity:{
         type:String,
@@ -35,7 +35,7 @@ const cldFuelUsage = mongoose.Schema({
     },
     machineId:{
         type:String,
-        required:true
+        // required:true
     },
 })
 module.exports = mongoose.model("cldFuelUsage",cldFuelUsage)
