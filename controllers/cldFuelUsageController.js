@@ -4,9 +4,9 @@ const Vehicle = require("../models/vehiclesModel");
 
 const create_fuel_usage = async (req, res) => {
     try {
-        let vehicleValue= ""
+        let vehicleValue = ""
         const expenseValue = await Expense.findOne({ _id: req?.body?.expenseId })
-        if (req?.body?.vehicleId ) {
+        if (req?.body?.vehicleId) {
             vehicleValue = await Vehicle.findOne({ _id: req?.body?.vehicleId })
         }
         const fuel = new cldFuelUsage({
@@ -73,7 +73,11 @@ const search_fuel_usage = async (req, res) => {
 const update_fuel_usage = async (req, res) => {
     try {
         const expenseValue = await Expense.findOne({ _id: req?.body?.expenseId })
-        const vehicleValue = await Vehicle.findOne({ _id: req?.body?.vehicleId })
+        // const vehicleValue = await Vehicle.findOne({ _id: req?.body?.vehicleId })
+        let vehicleValue = ""
+        if (req?.body?.vehicleId) {
+            vehicleValue = await Vehicle.findOne({ _id: req?.body?.vehicleId })
+        }
         const data = await cldFuelUsage.findOneAndUpdate({
             _id: req.body.utilId
         }, {
@@ -86,7 +90,7 @@ const update_fuel_usage = async (req, res) => {
             machineNumber: req.body.machineNumber,
             milleage: req.body.milleage,
             expense: expenseValue.invoice,
-            vehicle: vehicleValue.vehicleNumber
+            vehicle: vehicleValue ? vehicleValue.vehicleNumber : ""
         })
         if (data) {
             res.status(200).send({ result: true, message: 'Update Successfully' })

@@ -2,7 +2,12 @@ const mongoose = require("mongoose");
 const inventory = mongoose.Schema({
     productId:{
         type:String,
-        required:true
+    },
+    anotherItem:{
+        type:String,
+    },
+    inventoryType:{
+        type:String,
     },
     expenseId:{
         type:String,
