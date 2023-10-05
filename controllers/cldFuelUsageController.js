@@ -19,7 +19,7 @@ const create_fuel_usage = async (req, res) => {
             machineId: req.body.machineId,
             machineNumber: req.body.machineNumber,
             expense: expenseValue?.invoice,
-            vehicle: vehicleValue ? `${vehicleValue?.vehicleType} (${vehicleValue?.vehicleNumber})` : ""
+            vehicle: vehicleValue ? `${vehicleValue?.vehicleNumber}` : ""
         })
         const data = fuel.save()
         try {
